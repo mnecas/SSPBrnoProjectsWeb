@@ -1,116 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Secret title</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  <title>Projekty SSPBrno</title>
     {% load static %}
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="../static/css/materialize.min.css" media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="../static/css/style.css" media="screen,projection"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
 </head>
 <body>
+  <nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="index.html" class="brand-logo hide-on-med-and-down">Projekty SSPBrno</a>
+      <ul class="right hide-on-med-and-down">
+      	<li>
+      	<i class="material-icons white-text">search</i>
+      	</li>
+      	<li class="search">
+          <div class="search-wrapper white-text">
+            <input id="search" placeholder="Vyhledat">
+            <div class="search-results"></div>
+          </div>
+        </li>
+        <li><a href="/login">Přihlásit se</a></li>
+      </ul>
 
-
-<nav style="background: rgba(0,0,0,0.31)">
-    <div class="nav-wrapper container">
-        <a href="" class="brand-logo center">Helping Hand</a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
-            <li><a href="logout">Logout</a></li>
-        </ul>
+     <ul id="nav-mobile" class="side-nav">
+          <h4 class="black-text align center">Projekty SSPBrno</h4>
+          <hr>
+          <li class="search">
+          <div class="search-wrapper black-text">
+            <input id="search" placeholder="Vyhledat">
+            <div class="search-results"></div>
+          </div>
+        </li>
+        <li><a href="login.html">Přihlásit se</a></li>
+      </ul>
+      <div class="row">
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+      <a href="index.html" class="custom1 hide-on-large-only">Projekty SSPBrno</a>
     </div>
-</nav>
-<main class="container">
-    <div class="row small-preview">
-        <ul class="collection with-header">
-            <li class="collection-header"><b>Devices</b></li>
-            {% for device in Devices %}
-                <li class="collection-item ">{{ device.name }}
-                    <div class="secondary-content">
+  </nav>
 
-                        <form action="/config" method="post">
-                            {% csrf_token %}
-                            <button type="submit" name="device_name" value="{{ device.name }}" class="btn-link"><i
-                                    class="material-icons">settings</i></button>
+  <div class="fixed-action-btn click-to-toggle">
+    <a class="btn-floating btn-large red">
+      <i class="large material-icons waves-effect waves-light">add</i>
+    </a>
+  </div>
 
-                        </form>
-                    </div>
+  <div class="container">
+  <div class="section">
 
-                    <div class="secondary-content" style="margin-right: 15px">
-                        <div class="switch">
-                            <label>
-                                Off
-                                {% if device.state %}
-                                    <input type="checkbox" checked value="{{ device.ip }}"
-                                           onclick="TurnLight(this)">
-                                {% else %}
-                                    <input type="checkbox" value="{{ device.ip }}"
-                                           onclick="TurnLight(this)">
-                                {% endif %}
-
-                                <span class="lever"></span>
-                                On
-                            </label>
-                        </div>
-
-                    </div>
-                </li>
-            {% endfor %}
-        </ul>
-
-
-    </div>
-</main>
-{% for device in Devices %}
-    <div id="{{ device.name }}" class="overlay">
-        <div class="popup">
-            <a class="close" href="#">&times;</a>
-            <ul class="collection with-header">
-                <li class="collection-header"><b>Config
-                </b></li>
-                {% for conf in Configs %}
-                    <li class="collection-item ">{{ conf.name }}
-                        <div class="secondary-content">
-                            <a href="#{{ conf.name }}"><i class="material-icons">settings</i></a>
-                        </div>
-                    </li>
-
-                    <div id="{{ conf.name }}" class="overlay">
-                        <div class="popup">
-                            <a class="close" href="#">&times;</a>
-                            <ul class="collection with-header">
-                                <li class="collection-header"><b>Config
-                                </b></li>
-                            </ul>
-                        </div>
-                    </div>
-                {% endfor %}
-            </ul>
+  <div class="row">
+    <div class="col s12 m4">
+      <div class="card">
+        <div class="card-image">
+          <img src="images/23099225_1978490659032833_7147674390635741184_n.jpg" height="400">
+          <span class="card-title">Card Title</span>
+          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">edit</i></a>
         </div>
+        <div class="card-content">
+          <p>Card text.</p>
+        </div>
+        <div class="card-action">
+          <a href="#">Zobrazit více</a>
+        </div>
+      </div>
+  	</div>
+    <div class="col s12 m4">
+      <div class="card">
+        <div class="card-image">
+          <img src="images/23099225_1978490659032833_7147674390635741184_n.jpg" height="400">
+          <span class="card-title">Card Title</span>
+          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">edit</i></a>
+        </div>
+        <div class="card-content">
+          <p>Card text.</p>
+        </div>
+        <div class="card-action">
+          <a href="#">Zobrazit více</a>
+        </div>
+      </div>
     </div>
-{% endfor %}
+    <div class="col s12 m4">
+      <div class="card">
+        <div class="card-image">
+          <img src="images/23099225_1978490659032833_7147674390635741184_n.jpg" height="400">
+          <span class="card-title">Card Title</span>
+          <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">edit</i></a>
+        </div>
+        <div class="card-content">
+          <p>Card text.</p>
+        </div>
+        <div class="card-action">
+          <a href="#">Zobrazit více</a>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+</div>
 
-<script type="text/javascript">
-    function TurnLight(element) {
-        var ip = "http://" + element.value;
-        if (element.checked) {
-            ip += "/On";
-        } else {
-            ip += "/Off";
-        }
-        $.ajax({
-            url: ip,
-            success: function(resp){
-                alert(resp)
-            }
-        });
+  <footer class="page-footer orange">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">Projekty SSPBrno</h5>
+          <p class="grey-text text-lighten-4">Stránka pro projekty SPPBrno.</p>
 
 
-    }
-</script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="../static/js/materialize.min.js"></script>
-<script type="text/javascript" src="../static/js/script.js"></script>
-</body>
+        </div>
+         <div class="col 12 offset-s4">
+          <h5 class="white-text">Užitečné odkazy</h5>
+          <ul>
+            <li><a class="white-text" href="http://www.sspbrno.cz/">SSPBrno</a></li>
+            <li><a class="white-text" href="#!">Link 2</a></li>
+            <li><a class="white-text" href="#!">Link 3</a></li>
+            <li><a class="white-text" href="#!">Link 4</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="orange-text text-lighten-3" href="#">Porni</a>
+      </div>
+    </div>
+  </footer>
+
+  </body>
+<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
 </html>
