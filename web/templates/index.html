@@ -64,13 +64,13 @@
                         <div class="card-image">
                             <img src="media/{{ event.get_images.first.image }}" height="400">
                             <span class="card-title">{{ event.name }}</span>
-                            <a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">edit</i></a>
+                            <a class="btn-floating halfway-fab waves-effect waves-light red" href="edit_event?event={{ event }}"><i class="material-icons">edit</i></a>
                         </div>
                         <div class="card-content">
                             <p>{{ event.text }}</p>
                         </div>
                         <div class="card-action">
-                            <a href="#">Zobrazit více</a>
+                            <a href="info">Zobrazit více</a>
                         </div>
                     </div>
                 </div>

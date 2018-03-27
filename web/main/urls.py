@@ -26,6 +26,9 @@ urlpatterns = [
     path('create_event', views.create_event, name="create_event"),
     path('add_event', views.add_event, name="add_event"),
     path('edit_event', views.edit_event, name="edit_event"),
+    path('save_edit', views.save_edit, name="save_edit"),
+    path('remove_image', views.remove_image, name="remove_image"),
+    path('info', views.info, name="info"),
     path('', views.index, name="index"),
 ]
 

@@ -34,4 +34,42 @@ def add_event(request):
 
 
 def edit_event(request):
-    return render(request, "")
+    if request.method == "GET":
+        event = request.GET.get("event",None)
+        if event:
+            return render(request, "edit_event.html",{"event":Event.objects.filter(name=event).first()})
+        else:
+            return redirect("/")
+    else:
+        return redirect("/")
+
+def info(request):
+    if request.method == "POST":
+        return render(request, "edit_event.html")
+
+
+def remove_image(request):
+    if request.method == "GET":
+        img = request.GET.get("img",None)
+        event =  request.GET.get("event",None)
+        if img and event:
+            Image.objects.filter(image=img).first().delete()
+            return redirect("/edit_event?event="+event)
+        else:
+            return redirect("/")
+
+
+def save_edit(request):
+    if request.method == "POST":
+        name = request.POST.get("title", "")
+        event_id = request.POST.get("event_id", "")
+        text = request.POST.get("text", "")
+        images = request.POST.getlist('images')
+        event = Event.objects.filter(id=event_id)
+        event.update(name=name,text=text)
+        for img in images:
+            img=img.replace(" ","_")
+            Image.objects.get_or_create(image=img, event=event.first())
+        return redirect("/")
+    else:
+        return redirect("/")
