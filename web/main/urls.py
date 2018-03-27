@@ -21,7 +21,6 @@ from django.urls import path
 from django.conf import settings
 from main import views
 
-
 urlpatterns = [
     path('login', views.login, name="login"),
     path('create_event', views.create_event, name="create_event"),

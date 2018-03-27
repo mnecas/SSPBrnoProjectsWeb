@@ -1,70 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-  <title> Přihlášení Projekty SSPBrno</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+    <title> Přihlášení Projekty SSPBrno</title>
 
-     {% load static %}
+    {% load static %}
 
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link type="text/css" rel="stylesheet" href="../static/css/materialize.min.css" media="screen,projection"/>
-    <link type="text/css" rel="stylesheet" href="../static/css/style.css" media="screen,projection"/>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" media="screen,projection"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body>
-   <nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="index.html" class="brand-logo hide-on-med-and-down">Projekty SSPBrno</a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="login.html">Přihlásit se</a></li>
-      </ul>
+<nav class="light-blue lighten-1" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo hide-on-med-and-down">Projekty
+        SSPBrno</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="login">Přihlásit se</a></li>
+        </ul>
 
-      <ul id="nav-mobile" class="side-nav">
-          <h4 class="black-text align center">Projekty SSPBrno</h4>
-          <hr>
-         <div class="input-field right hide-on-med-and-down">
-          <input class="white-text" id="search" type="search" required>
-          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-          <i class="material-icons">close</i>
+        <ul id="nav-mobile" class="side-nav">
+            <h4 class="black-text align center">Projekty SSPBrno</h4>
+            <hr>
+            <div class="input-field right hide-on-med-and-down">
+                <input class="white-text" id="search" type="search" required>
+                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                <i class="material-icons">close</i>
+            </div>
+            <li><a href="login">Přihlásit se</a></li>
+        </ul>
+        <div class="row">
+            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+            <a href="/" class="custom1 hide-on-large-only">Projekty SSPBrno</a>
         </div>
-        <li><a href="login.html">Přihlásit se</a></li>
-      </ul>
-      <div class="row">
-      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-      <a href="index.html" class="custom1 hide-on-large-only">Projekty SSPBrno</a>
     </div>
-    </div>
-  </nav>
-  
-  <nav class="grey darken-1">
-  <div class="container">
+</nav>
+
+<nav class="grey darken-1">
+    <div class="container">
         <div class="breadcrumbs">
             <a href="/" class="breadcrumb">Domov</a>
-            <a href="#" class="breadcrumb">Přihláš
-    </nav>
+            <a href="#" class="breadcrumb">Přihláš</a></div>
+    </div>
+</nav>
 
-  <div class="container">
+<div class="container">
     <div class="section">
-     <div class="row">
-    <form class="col s12">
-      <div class="row">
-        <div class="input-field col s6">
-          <i class="material-icons prefix">account_circle</i>
-          <input id="icon_prefix" type="text" class="validate">
-          <label for="icon_prefix">Uživatelské jméno</label>
+        <div class="row">
+            <form class="col s12">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">account_circle</i>
+
+                        <input placeholder="Placeholder" id="first_name" type="text" class="validate">
+                        <label for="first_name">First Name</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <i class="material-icons prefix">lock</i>
+                        <input id="icon_telephone" type="tel" class="validate">
+                        <label for="icon_telephone">Heslo</label>
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="input-field col s6">
-          <i class="material-icons prefix">lock</i>
-          <input id="icon_telephone" type="tel" class="validate">
-          <label for="icon_telephone">Heslo</label>
-        </div>
-      </div>
-    </form>
-  </div>
-</div>
+    </div>
 </div>
 
 
 <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
-  </body>
+<script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+
+</body>
 </html>

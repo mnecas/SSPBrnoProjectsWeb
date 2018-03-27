@@ -4,6 +4,7 @@ from django.conf import settings
 
 fs = FileSystemStorage(location=settings.MEDIA_ROOT)
 
+
 class User(models.Model):
     username = models.CharField(max_length=30, default="")
     password = models.CharField(max_length=300, default="")
@@ -22,6 +23,7 @@ class User(models.Model):
     def __str__(self):
         return str(self.username)
 
+
 class Event(models.Model):
     name = models.CharField(max_length=30, default="")
     text = models.TextField(max_length=3000, default="")
@@ -31,6 +33,7 @@ class Event(models.Model):
 
     def __str__(self):
         return str(self.name)
+
 
 class Image(models.Model):
     image = models.ImageField(storage=fs)
