@@ -45,7 +45,10 @@ def edit_event(request):
 
 def info(request):
     if request.method == "POST":
-        return render(request, "edit_event.html")
+        event_name = request.POST.get("event",None)
+        if event_name:
+            event=Event.objects.filter(name=event_name).first()
+            return render(request, "info.html",{"event":event})
 
 
 def remove_image(request):
