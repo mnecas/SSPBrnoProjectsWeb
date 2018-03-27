@@ -2,9 +2,6 @@ from django.db import models
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 
-fs = FileSystemStorage(location=settings.MEDIA_ROOT)
-
-
 class User(models.Model):
     username = models.CharField(max_length=30, default="")
     password = models.CharField(max_length=300, default="")
@@ -36,5 +33,5 @@ class Event(models.Model):
 
 
 class Image(models.Model):
-    image = models.ImageField(storage=fs)
+    image = models.ImageField(upload_to = 'pic_folder/')
     event = models.ForeignKey(Event, on_delete=models.CASCADE)

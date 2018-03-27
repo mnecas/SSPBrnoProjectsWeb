@@ -1,3 +1,4 @@
+from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
 
 from django.http import HttpResponse
@@ -28,13 +29,23 @@ def create_event(request):
     else:
         name = request.POST.get("title", "")
         text = request.POST.get("text", "")
-        images = request.POST.getlist('images')
+        ##TOTO NEFUNGUJE
+        for file in request.FILES.values():
+            print(file)
+        print( request.FILES)
+        images=request.FILES.getlist('images')
+        print(images)
         if name and text:
             event = Event(name=name, text=text)
             event.save()
             for img in images:
+                fs = FileSystemStorage()
+                fs.save(img.name, img)
+
                 img = img.replace(" ", "_")
                 Image(image=img, event=event).save()
+        #YEP TOHLE
+
         return redirect("/")
 
 
