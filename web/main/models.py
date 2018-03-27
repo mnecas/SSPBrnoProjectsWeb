@@ -1,5 +1,7 @@
 from django.db import models
+from django.core.files.storage import FileSystemStorage
 
+fs = FileSystemStorage(location="/media/pictures")
 
 class User(models.Model):
     username = models.CharField(max_length=30, default="")
@@ -27,5 +29,5 @@ class Event(models.Model):
         return str(self.name)
 
 class Image(models.Model):
-    image = models.ImageField(default="")
+    image = models.ImageField(storage=fs)
     event = models.ForeignKey(Event, on_delete=models.CASCADE)

@@ -31,6 +31,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'web.urls'
+MEDIA_ROOT = '/media/pictures'
+MEDIA_URL = '/media/'
 
 TEMPLATES = [
     {
