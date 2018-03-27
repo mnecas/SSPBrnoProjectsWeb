@@ -44,8 +44,8 @@ def edit_event(request):
         return redirect("/")
 
 def info(request):
-    if request.method == "POST":
-        event_name = request.POST.get("event",None)
+    if request.method == "GET":
+        event_name = request.GET.get("event",None)
         if event_name:
             event=Event.objects.filter(name=event_name).first()
             return render(request, "info.html",{"event":event})
