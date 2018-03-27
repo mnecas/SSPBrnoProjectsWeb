@@ -24,6 +24,9 @@ from main import views
 
 urlpatterns = [
     path('login', views.login, name="login"),
+    path('create_event', views.create_event, name="create_event"),
+    path('add_event', views.add_event, name="add_event"),
+    path('edit_event', views.edit_event, name="edit_event"),
     path('', views.index, name="index"),
 ]
 
