@@ -1,7 +1,8 @@
 from django.db import models
 from django.core.files.storage import FileSystemStorage
+from django.conf import settings
 
-fs = FileSystemStorage(location="/media/pictures")
+fs = FileSystemStorage(location=settings.MEDIA_ROOT)
 
 class User(models.Model):
     username = models.CharField(max_length=30, default="")
@@ -24,6 +25,9 @@ class User(models.Model):
 class Event(models.Model):
     name = models.CharField(max_length=30, default="")
     text = models.CharField(max_length=3000, default="")
+
+    def get_images(self):
+        return Image.objects.filter(event=self)
 
     def __str__(self):
         return str(self.name)
