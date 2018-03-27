@@ -85,7 +85,10 @@ def save_edit(request):
         event.update(name=name, text=text)
         for img in images:
             img = img.replace(" ", "_")
-            Image.objects.get_or_create(image=img, event=event.first())
+            image,created=Image.objects.get_or_create(image=img, event=event.first())
+            if created:
+                fs = FileSystemStorage()
+                fs.save(img.name, img)
         return redirect("/")
     else:
         return redirect("/")
