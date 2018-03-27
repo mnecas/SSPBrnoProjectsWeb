@@ -33,5 +33,5 @@ class Event(models.Model):
 
 
 class Image(models.Model):
-    image = models.ImageField(upload_to = 'pic_folder/')
+    image = models.ImageField()
     event = models.ForeignKey(Event, on_delete=models.CASCADE)

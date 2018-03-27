@@ -29,13 +29,14 @@ def create_event(request):
     else:
         name = request.POST.get("title", "")
         text = request.POST.get("text", "")
-        img=request.FILES['images']
+        images=request.FILES.getlist('images')
         if name and text:
             event = Event(name=name, text=text)
             event.save()
-            fs = FileSystemStorage()
-            fs.save(img.name, img)
-            Image(image=img, event=event).save()
+            for img in images:
+                fs = FileSystemStorage()
+                fs.save(img.name, img)
+                Image(image=img, event=event).save()
 
         return redirect("/")
 
