@@ -58,7 +58,7 @@
 
 
         <div class="row">
-            <form class="col s12" method="POST" action="/create_event">
+            <form class="col s12" method="POST" action="/create_event" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row">
                     <div class="input-field">

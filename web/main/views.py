@@ -29,22 +29,13 @@ def create_event(request):
     else:
         name = request.POST.get("title", "")
         text = request.POST.get("text", "")
-        ##TOTO NEFUNGUJE
-        for file in request.FILES.values():
-            print(file)
-        print( request.FILES)
-        images=request.FILES.getlist('images')
-        print(images)
+        img=request.FILES['images']
         if name and text:
             event = Event(name=name, text=text)
             event.save()
-            for img in images:
-                fs = FileSystemStorage()
-                fs.save(img.name, img)
-
-                img = img.replace(" ", "_")
-                Image(image=img, event=event).save()
-        #YEP TOHLE
+            fs = FileSystemStorage()
+            fs.save(img.name, img)
+            Image(image=img, event=event).save()
 
         return redirect("/")
 
