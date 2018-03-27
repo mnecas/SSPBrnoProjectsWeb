@@ -74,6 +74,14 @@ def remove_image(request):
         else:
             return redirect("/")
 
+def remove_event(request):
+    if request.method == "GET":
+        event = request.GET.get("event", None)
+
+        if event:
+            Event.objects.filter(name=event).first().delete()
+        return redirect("/")
+
 
 def save_edit(request):
     if request.method == "POST":
