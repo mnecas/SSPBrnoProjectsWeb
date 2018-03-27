@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
 from django.http import HttpResponse
-from .models import Image, Event
+from .models import Image, Event, User
 
 
 # Create your views here.
@@ -10,7 +10,16 @@ def index(request):
 
 
 def login(request):
-    return render(request, "login.html", {"error": "Bad username or password!"})
+    if request.method == "GET":
+        return render(request, "login.html")
+    elif request.method == "POST":
+        password = request.POST.get("pass","")
+        username = request.POST.get("username","")
+
+        if User.objects.filter(username=username, password=password):
+            request.session["username"] = username
+            return redirect("/")
+        return render(request, "login.html", {"error": "Bad username or password!"})
 
 
 def create_event(request):
@@ -24,7 +33,7 @@ def create_event(request):
             event = Event(name=name, text=text)
             event.save()
             for img in images:
-                img=img.replace(" ","_")
+                img = img.replace(" ", "_")
                 Image(image=img, event=event).save()
         return redirect("/")
 
@@ -35,29 +44,30 @@ def add_event(request):
 
 def edit_event(request):
     if request.method == "GET":
-        event = request.GET.get("event",None)
+        event = request.GET.get("event", None)
         if event:
-            return render(request, "edit_event.html",{"event":Event.objects.filter(name=event).first()})
+            return render(request, "edit_event.html", {"event": Event.objects.filter(name=event).first()})
         else:
             return redirect("/")
     else:
         return redirect("/")
 
+
 def info(request):
     if request.method == "GET":
-        event_name = request.GET.get("event",None)
+        event_name = request.GET.get("event", None)
         if event_name:
-            event=Event.objects.filter(name=event_name).first()
-            return render(request, "info.html",{"event":event})
+            event = Event.objects.filter(name=event_name).first()
+            return render(request, "info.html", {"event": event})
 
 
 def remove_image(request):
     if request.method == "GET":
-        img = request.GET.get("img",None)
-        event =  request.GET.get("event",None)
+        img = request.GET.get("img", None)
+        event = request.GET.get("event", None)
         if img and event:
             Image.objects.filter(image=img).first().delete()
-            return redirect("/edit_event?event="+event)
+            return redirect("/edit_event?event=" + event)
         else:
             return redirect("/")
 
@@ -69,9 +79,9 @@ def save_edit(request):
         text = request.POST.get("text", "")
         images = request.POST.getlist('images')
         event = Event.objects.filter(id=event_id)
-        event.update(name=name,text=text)
+        event.update(name=name, text=text)
         for img in images:
-            img=img.replace(" ","_")
+            img = img.replace(" ", "_")
             Image.objects.get_or_create(image=img, event=event.first())
         return redirect("/")
     else:
