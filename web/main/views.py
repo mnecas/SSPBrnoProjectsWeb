@@ -9,7 +9,8 @@ from .models import Image, Event, User
 def index(request):
     user=None
     if "username" in request.session.keys():
-        user=User.objects.filter(username=request.session["username"]).first()
+        if request.session["username"]:
+            user=User.objects.filter(username=request.session["username"]).first()
     return render(request, "index.html",
                   {"events": Event.objects.all(),
                    "user":user})
@@ -98,9 +99,23 @@ def remove_image(request):
 
 def user_settings(request):
     if request.method == "GET":
-        return render(request, "user_settings.html")
+        user = User.objects.filter(username=request.session["username"]).first()
+        return render(request, "user_settings.html",
+                      {"events": Event.objects.all(),
+                       "user": user})
     else:
-        pass
+        image = request.FILES['image']
+        user=User.objects.filter(username=request.session["username"])
+        fs = FileSystemStorage()
+        fs.save(image.name, image)
+        user.update(icon=image)
+        return redirect("/user_settings")
+
+
+
+def user_logout(request):
+    del request.session["username"]
+    return redirect("/")
 
 
 def remove_event(request):
