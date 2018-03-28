@@ -97,6 +97,12 @@ def info(request):
 def edit_comment(request):
     pass
 
+def remove_comment(request):
+    if request.method == "GET":
+        comment_id = request.GET.get("comment_id", "")
+        if comment_id:
+            Comment.objects.filter(id=comment_id).first().delete()
+        return redirect("/")
 def remove_image(request):
     if request.method == "GET":
         img = request.GET.get("img", None)
