@@ -59,9 +59,15 @@
 
             <h1>{{ event.name }}</h1>
             {{ event.text }}
-            {% for img in event.get_images %}
-                <img class="materialboxed" width="650" src="media/{{ img.image }}"> <!-- random image -->
-            {% endfor %}
+            <div class="slider">
+                <ul class="slides">
+                    {% for img in event.get_images %}
+                        <li>
+                            <img src="media/{{ img.image }}"> <!-- random image -->
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
 
         <!--
@@ -106,6 +112,7 @@
             </div>
         </div>
     </div>
+
     <div class="footer-copyright">
         <div class="container">
             Made by <a class="orange-text text-lighten-3" href="#">Porni</a>
@@ -113,8 +120,15 @@
     </div>
 </footer>
 
-</body>
-<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.slider').slider({full_width: true});
+    });
+
+</script>
+
+</body>
 
 </html>
