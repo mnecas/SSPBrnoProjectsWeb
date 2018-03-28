@@ -2,18 +2,18 @@ from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
 
 from django.http import HttpResponse
-from .models import Image, Event, User
+from .models import Image, Event, User, Comment
 
 
 # Create your views here.
 def index(request):
-    user=None
+    user = None
     if "username" in request.session.keys():
         if request.session["username"]:
-            user=User.objects.filter(username=request.session["username"]).first()
+            user = User.objects.filter(username=request.session["username"]).first()
     return render(request, "index.html",
                   {"events": Event.objects.all(),
-                   "user":user})
+                   "user": user})
 
 
 def login(request):
@@ -84,7 +84,18 @@ def info(request):
             event = Event.objects.filter(name=event_name).first()
             return render(request, "info.html", {"event": event})
         return redirect("/")
+    else:
+        if "username" in request.session.keys():
+            user = request.session["username"]
+            comment_text = request.POST.get("comment_text","")
+            event_id = request.POST.get("event_id","")
+            Comment(event=Event.objects.filter(id=event_id).first(),
+                    user=User.objects.filter(username=user).first(),
+                    text=comment_text).save()
+        return redirect("/")
 
+def edit_comment(request):
+    pass
 
 def remove_image(request):
     if request.method == "GET":
@@ -105,12 +116,11 @@ def user_settings(request):
                        "user": user})
     else:
         image = request.FILES['image']
-        user=User.objects.filter(username=request.session["username"])
+        user = User.objects.filter(username=request.session["username"])
         fs = FileSystemStorage()
         fs.save(image.name, image)
         user.update(icon=image)
         return redirect("/user_settings")
-
 
 
 def user_logout(request):

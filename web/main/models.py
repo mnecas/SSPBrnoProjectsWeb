@@ -13,6 +13,9 @@ class Event(models.Model):
     def get_images(self):
         return Image.objects.filter(event=self)
 
+    def get_comments(self):
+        return Comment.objects.filter(event=self)
+
     def __str__(self):
         return str(self.name)
 
@@ -48,4 +51,4 @@ class Comment(models.Model):
 class Anketa(models.Model):
     question = models.CharField(max_length=30, default="")
     event = models.ForeignKey(Event, on_delete=models.CASCADE,default=None)
-    #points =
+    #points = http://s3.amazonaws.com/37assets/svn/765-default-avatar.png
