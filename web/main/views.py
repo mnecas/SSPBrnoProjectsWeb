@@ -114,3 +114,20 @@ def save_edit(request):
         return redirect("/")
     else:
         return redirect("/")
+
+
+def change_password(request):
+    if request.method == "GET":
+        return render(request, "change_pass.html")
+    elif request.method == "POST":
+        password = request.POST.get("pass1", "")
+        password2 = request.POST.get("pass2", "")
+        old_pass = request.POST.get("old_pass", "")
+        username = request.session["username"]
+        if old_pass and password and password2 and password == password2 and username:
+            user = User.objects.filter(username=username)
+            if user:
+                user.update(password=password)
+                user.save()
+                return redirect("/edit_user.html")
+        return render(request, "change_pass.html", {"error": "passwords are not same or old password is incorrect!"})
