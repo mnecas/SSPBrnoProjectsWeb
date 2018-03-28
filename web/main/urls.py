@@ -28,6 +28,7 @@ urlpatterns = [
     path('add_event', views.add_event, name="add_event"),
     path('edit_event', views.edit_event, name="edit_event"),
     path('save_edit', views.save_edit, name="save_edit"),
+    path('user_settings', views.user_settings, name="user_settings"),
     path('remove_image', views.remove_image, name="remove_image"),
     path('remove_event', views.remove_event, name="remove_event"),
     path('info', views.info, name="info"),

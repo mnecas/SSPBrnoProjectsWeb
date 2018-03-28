@@ -7,7 +7,12 @@ from .models import Image, Event, User
 
 # Create your views here.
 def index(request):
-    return render(request, "index.html", {"events": Event.objects.all()})
+    user=None
+    if "username" in request.session.keys():
+        user=User.objects.filter(username=request.session["username"]).first()
+    return render(request, "index.html",
+                  {"events": Event.objects.all(),
+                   "user":user})
 
 
 def login(request):
@@ -89,6 +94,13 @@ def remove_image(request):
             return redirect("/edit_event?event=" + event)
         else:
             return redirect("/")
+
+
+def user_settings(request):
+    if request.method == "GET":
+        return render(request, "user_settings.html")
+    else:
+        pass
 
 
 def remove_event(request):

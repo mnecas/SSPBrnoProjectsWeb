@@ -26,7 +26,7 @@ class User(models.Model):
     username = models.CharField(max_length=30, default="")
     password = models.CharField(max_length=300, default="")
     email = models.EmailField(default="")
-    icon = models.ForeignKey(Image, on_delete=models.CASCADE,default=None)
+    icon = models.ForeignKey(Image, on_delete=models.CASCADE,default=None,null=True)
     def right_user(self, username, password):
         if username == self.username and self.password == password:
             return True

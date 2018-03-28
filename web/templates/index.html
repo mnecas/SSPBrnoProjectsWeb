@@ -16,7 +16,7 @@
 <nav class="custom2" role="navigation">
     <div class="nav-wrapper container">
         <a id="logo-container" href="/" class="brand-logo hide-on-med-and-down">Projekty
-        SSPBrno</a>
+            SSPBrno</a>
         <ul class="right hide-on-med-and-down">
             <li>
                 <i class="material-icons white-text">search</i>
@@ -27,8 +27,24 @@
                     <div class="search-results"></div>
                 </div>
             </li>
-            <li><a href="/login">Přihlásit se</a></li>
-            <li><a href="/register">Zaregistrovat se</a></li>
+            {% if user %}
+
+
+                <li><a href="/user_settings">
+                    {% if user.icon %}
+                        <img src="{{ user.icon }}" class="circle responsive-img"> <!-- notice the "circle" class -->
+                    {% else %}
+                        <img height="50px" width="50px" src="https://i.stack.imgur.com/dr5qp.jpg"
+                             class="circle responsive-img">
+                        <!-- notice the "circle" class -->
+                    {% endif %}
+                    <span class="black-text">{{ user.username }}</span>
+                </a>
+                </li>
+            {% else %}
+                <li><a href="/login">Přihlásit se</a></li>
+                <li><a href="/register">Zaregistrovat se</a></li>
+            {% endif %}
         </ul>
     </div>
 </nav>
@@ -40,35 +56,37 @@
 </div>
 
 <main>
-<div class="container">
-    <div class="section">
+    <div class="container">
+        <div class="section">
 
-        <div class="row">
-            {% for event in events %}
-                <div class="col s12 m4">
-                    <div class="card">
-                        <div class="card-image">
-                            <img src="media/{{ event.get_images.first.image }}" height="400">
-                            <span class="card-title" style="color: black">{{ event.name }}</span>
-                            <a class="btn-floating halfway-fab waves-effect waves-light red" style="margin-right: 50px" href="edit_event?event={{ event }}">
-                                <i class="material-icons">edit</i></a>
-                            <a class="btn-floating halfway-fab waves-effect waves-light red" href="remove_event?event={{ event }}">
-                                <i class="material-icons">delete</i></a>
-                        </div>
-                        <div class="card-content">
-                            <p>{{ event.text }}</p>
-                        </div>
+            <div class="row">
+                {% for event in events %}
+                    <div class="col s12 m4">
+                        <div class="card">
+                            <div class="card-image">
+                                <img src="media/{{ event.get_images.first.image }}" height="400">
+                                <span class="card-title" style="color: black">{{ event.name }}</span>
+                                <a class="btn-floating halfway-fab waves-effect waves-light red"
+                                   style="margin-right: 50px" href="edit_event?event={{ event }}">
+                                    <i class="material-icons">edit</i></a>
+                                <a class="btn-floating halfway-fab waves-effect waves-light red"
+                                   href="remove_event?event={{ event }}">
+                                    <i class="material-icons">delete</i></a>
+                            </div>
+                            <div class="card-content">
+                                <p>{{ event.text }}</p>
+                            </div>
 
-                        <div class="card-action">
-                            <a href="info?event={{ event.name }}">Zobrazit více</a>
+                            <div class="card-action">
+                                <a href="info?event={{ event.name }}">Zobrazit více</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
 
+            </div>
         </div>
     </div>
-</div>
 </main>
 
 <footer class="page-footer custom3">
