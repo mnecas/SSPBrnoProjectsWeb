@@ -76,7 +76,8 @@ def info(request):
         event_name = request.GET.get("event", None)
         if event_name:
             event = Event.objects.filter(name=event_name).first()
-        return render(request, "info.html", {"event": event})
+            return render(request, "info.html", {"event": event})
+        return redirect("/")
 
 
 def remove_image(request):
