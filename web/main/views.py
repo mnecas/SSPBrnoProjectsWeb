@@ -16,7 +16,6 @@ def login(request):
     elif request.method == "POST":
         password = request.POST.get("pass", "")
         username = request.POST.get("username", "")
-
         if User.objects.filter(username=username, password=password):
             request.session["username"] = username
             return redirect("/")
