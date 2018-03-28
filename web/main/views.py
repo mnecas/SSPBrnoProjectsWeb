@@ -14,8 +14,8 @@ def login(request):
     if request.method == "GET":
         return render(request, "login.html")
     elif request.method == "POST":
-        password = request.POST.get("pass","")
-        username = request.POST.get("username","")
+        password = request.POST.get("pass", "")
+        username = request.POST.get("username", "")
 
         if User.objects.filter(username=username, password=password):
             request.session["username"] = username
@@ -29,7 +29,7 @@ def create_event(request):
     else:
         name = request.POST.get("title", "")
         text = request.POST.get("text", "")
-        images=request.FILES.getlist('images')
+        images = request.FILES.getlist('images')
         if name and text:
             event = Event(name=name, text=text)
             event.save()
@@ -74,10 +74,10 @@ def remove_image(request):
         else:
             return redirect("/")
 
+
 def remove_event(request):
     if request.method == "GET":
         event = request.GET.get("event", None)
-
         if event:
             Event.objects.filter(name=event).first().delete()
         return redirect("/")
@@ -88,12 +88,11 @@ def save_edit(request):
         name = request.POST.get("title", "")
         event_id = request.POST.get("event_id", "")
         text = request.POST.get("text", "")
-        images = request.POST.getlist('images')
+        images = request.FILES.getlist('images')
         event = Event.objects.filter(id=event_id)
         event.update(name=name, text=text)
         for img in images:
-            img = img.replace(" ", "_")
-            image,created=Image.objects.get_or_create(image=img, event=event.first())
+            image, created = Image.objects.get_or_create(image=img, event=event.first())
             if created:
                 fs = FileSystemStorage()
                 fs.save(img.name, img)
