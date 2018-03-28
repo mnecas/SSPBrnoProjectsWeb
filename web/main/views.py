@@ -26,12 +26,16 @@ def register(request):
     if request.method == "GET":
         return render(request, "register.html")
     elif request.method == "POST":
-        password = request.POST.get("pass", "")
+        password = request.POST.get("pass1", "")
+        password2 = request.POST.get("pass2", "")
         username = request.POST.get("username", "")
-        if User.objects.filter(username=username, password=password):
-            request.session["username"] = username
-            return redirect("/")
-        return render(request, "login.html", {"error": "Bad username or password!"})
+        if username and password and password2 and password == password2:
+            if not User.objects.filter(username=username):
+                user = User(username=username, password=password)
+                user.save()
+                request.session["username"] = username
+                return redirect("/")
+        return render(request, "register.html", {"error": "This user was registred or the passwords are not same!"})
 
 
 def create_event(request):
