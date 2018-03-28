@@ -13,121 +13,78 @@
 
 </head>
 <body>
-<nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo hide-on-med-and-down">Projekty
-        SSPBrno</a>
-        <ul class="right hide-on-med-and-down">
-            <li>
-                <i class="material-icons white-text">search</i>
-            </li>
-            <li class="search">
-                <div class="search-wrapper white-text">
-                    <input id="search" placeholder="Vyhledat">
-                    <div class="search-results"></div>
-                </div>
-            </li>
-            <li><a href="/login">Přihlásit se</a></li>
-        </ul>
 
-        <ul id="nav-mobile" class="side-nav">
-            <h4 class="black-text align center">Projekty SSPBrno</h4>
-            <hr>
-            <li class="search">
-                <div class="search-wrapper black-text">
-                    <input id="search" placeholder="Vyhledat">
-                    <div class="search-results"></div>
-                </div>
-            </li>
-            <li><a href="login.html">Přihlásit se</a></li>
-        </ul>
-        <div class="row">
-            <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
-            <a href="index.html" class="custom1 hide-on-large-only">Projekty SSPBrno</a>
-        </div>
-    </div>
-</nav>
-
-<div class="fixed-action-btn click-to-toggle">
-    <a class="btn-floating btn-large red">
-        <i class="large material-icons waves-effect waves-light">add</i>
-    </a>
+<div class="slider fullscreen">
+    <ul class="slides">
+        <li>
+            <img src="http://lorempixel.com/580/250/nature/1">
+            <!-- random image -->
+            <div class="caption center-align">
+                <h3>This is our big Tagline!</h3>
+                <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                <a class="waves-effect waves-light btn-large white light-blue-text text-lighten-1">Button</a>
+            </div>
+        </li>
+        <li>
+            <img src="http://lorempixel.com/580/250/nature/2">
+            <!-- random image -->
+            <div class="caption left-align">
+                <h3>Left Aligned Caption</h3>
+                <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+            </div>
+        </li>
+        <li>
+            <img src="http://lorempixel.com/580/250/nature/3">
+            <!-- random image -->
+            <div class="caption right-align">
+                <h3>Right Aligned Caption</h3>
+                <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+            </div>
+        </li>
+        <li>
+            <img src="http://lorempixel.com/580/250/nature/4">
+            <!-- random image -->
+            <div class="caption center-align">
+                <h3>This is our big Tagline!</h3>
+                <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+            </div>
+        </li>
+    </ul>
 </div>
 
-<div class="container">
-    <div class="section">
-        <div class="row">
 
-            <h1>{{ event.name }}</h1>
-            {{ event.text }}
-            <div class="slider">
-                <ul class="slides">
-                    {% for img in event.get_images %}
-                        <li>
-                            <img src="media/{{ img.image }}"> <!-- random image -->
-                        </li>
-                    {% endfor %}
-                </ul>
+<!--
+KOMENTARE
+<div class="col s12 m8 offset-m2 l6 offset-l3">
+    <div class="card-panel grey lighten-5 z-depth-1">
+        <div class="row valign-wrapper">
+            <div class="col s2">
+                <img src="images/yuna.jpg" alt="" class="circle responsive-img">
+
+            </div>
+            <div class="col s10">
+      <span class="black-text">
+        This is a square image. Add the "circle" class to it to make it appear circular.
+      </span>
             </div>
         </div>
-
-        <!--
-        KOMENTARE
-        <div class="col s12 m8 offset-m2 l6 offset-l3">
-            <div class="card-panel grey lighten-5 z-depth-1">
-                <div class="row valign-wrapper">
-                    <div class="col s2">
-                        <img src="images/yuna.jpg" alt="" class="circle responsive-img">
-
-                    </div>
-                    <div class="col s10">
-              <span class="black-text">
-                This is a square image. Add the "circle" class to it to make it appear circular.
-              </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        -->
-
     </div>
 </div>
-
-<footer class="page-footer orange">
-    <div class="container">
-        <div class="row">
-            <div class="col l6 s12">
-                <h5 class="white-text">Projekty SSPBrno</h5>
-                <p class="grey-text text-lighten-4">Stránka pro projekty SPPBrno.</p>
+-->
 
 
-            </div>
-            <div class="col 12 offset-s4">
-                <h5 class="white-text">Užitečné odkazy</h5>
-                <ul>
-                    <li><a class="white-text" href="http://www.sspbrno.cz/">SSPBrno</a></li>
-                    <li><a class="white-text" href="#!">Link 2</a></li>
-                    <li><a class="white-text" href="#!">Link 3</a></li>
-                    <li><a class="white-text" href="#!">Link 4</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
+<script>(function ($) {
+    $(function () {
 
-    <div class="footer-copyright">
-        <div class="container">
-            Made by <a class="orange-text text-lighten-3" href="#">Porni</a>
-        </div>
-    </div>
-</footer>
+        // The rest above this is hidden
 
-<script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
-<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('.slider').slider({full_width: true});
-    });
+        $('.slider').slider({});
 
+    }); // end of document ready
+})(jQuery); // end of jQuery name space
 </script>
+<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
 
 </body>
 
