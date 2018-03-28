@@ -22,6 +22,18 @@ def login(request):
         return render(request, "login.html", {"error": "Bad username or password!"})
 
 
+def register(request):
+    if request.method == "GET":
+        return render(request, "register.html")
+    elif request.method == "POST":
+        password = request.POST.get("pass", "")
+        username = request.POST.get("username", "")
+        if User.objects.filter(username=username, password=password):
+            request.session["username"] = username
+            return redirect("/")
+        return render(request, "login.html", {"error": "Bad username or password!"})
+
+
 def create_event(request):
     if request.method == "GET":
         return render(request, "create_event.html")
