@@ -14,43 +14,50 @@
 </head>
 <body>
 
-<div class="slider fullscreen">
+<nav class="custom2" role="navigation">
+    <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo hide-on-med-and-down">Projekty
+        SSPBrno</a>
+        <ul class="right hide-on-med-and-down">
+            <li><a href="/login">Přihlásit se</a></li>
+        </ul>
+    </div>
+</nav>
+
+<main>
+  <div class="container">
+  <div class="section">
+    <h4>Nadpis</h4>
+     <div class="slider">
     <ul class="slides">
-        <li>
-            <img src="http://lorempixel.com/580/250/nature/1">
-            <!-- random image -->
-            <div class="caption center-align">
-                <h3>This is our big Tagline!</h3>
-                <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-                <a class="waves-effect waves-light btn-large white light-blue-text text-lighten-1">Button</a>
-            </div>
-        </li>
-        <li>
-            <img src="http://lorempixel.com/580/250/nature/2">
-            <!-- random image -->
-            <div class="caption left-align">
-                <h3>Left Aligned Caption</h3>
-                <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-            </div>
-        </li>
-        <li>
-            <img src="http://lorempixel.com/580/250/nature/3">
-            <!-- random image -->
-            <div class="caption right-align">
-                <h3>Right Aligned Caption</h3>
-                <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-            </div>
-        </li>
-        <li>
-            <img src="http://lorempixel.com/580/250/nature/4">
-            <!-- random image -->
-            <div class="caption center-align">
-                <h3>This is our big Tagline!</h3>
-                <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
-            </div>
-        </li>
+      <li>
+        <img src="https://wallpaperbrowse.com/media/images/_89716241_thinkstockphotos-523060154.jpg">
+      </li>
+      <li>
+        <img src="https://wallpaperbrowse.com/media/images/968361.jpg">
+        <div class="caption center-align">
+          <h5 class="light grey-text text-lighten-3">Popis</h5>
+        </div>
+      </li>
+      <li>
+        <img src="http://kb4images.com/images/random-image/37670495-random-image.jpg">
+        <div class="caption center-align">
+          <h5 class="light grey-text text-lighten-3">Popis</h5>
+        </div>
+      </li>
+      <li>
+        <img src="https://www.moooi.com/sites/default/files/styles/large/public/product-images/random_detail.jpg?itok=ErJveZTY">
+        <div class="caption center-align">
+          <h5 class="light grey-text text-lighten-3">Popis</h5>
+        </div>
+      </li>
     </ul>
-</div>
+    <br>
+    <p>Text</p>
+  </div>
+  
+  </div>
+  </div>
+  </main>
 
 
 <!--
@@ -73,19 +80,37 @@ KOMENTARE
 -->
 
 
-<script>(function ($) {
-    $(function () {
-
-        // The rest above this is hidden
-
-        $('.slider').slider({});
-
-    }); // end of document ready
-})(jQuery); // end of jQuery name space
-</script>
-<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
-<script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+<footer class="page-footer custom3">
+    <div class="container">
+        <div class="row">
+            <div class="col l6 s12">
+                <h5 class="white-text">Projekty SSPBrno</h5>
+                <p class="grey-text text-lighten-4">Stránka pro projekty SPPBrno.</p>
+            </div>
+            <div class="col 12 offset-s4">
+                <h5 class="white-text">Užitečné odkazy</h5>
+                <ul>
+                    <li><a class="white-text" href="http://www.sspbrno.cz/">SSPBrno</a></li>
+                    <li><a class="white-text" href="#!">Link 2</a></li>
+                    <li><a class="white-text" href="#!">Link 3</a></li>
+                    <li><a class="white-text" href="#!">Link 4</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer-copyright">
+        <div class="container">
+            Made by <a class="orange-text text-lighten-3" href="#">Porni</a>
+        </div>
+    </div>
+</footer>
 
 </body>
-
+<script type="text/javascript" src="{% static 'js/script.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+<script>
+   $(document).ready(function () {
+       $('.slider').slider({full_width: true});
+   });
+</script>
 </html>
