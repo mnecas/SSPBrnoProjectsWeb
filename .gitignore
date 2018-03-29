@@ -4,10 +4,10 @@ __pycache__/
 *$py.class
 
 .idea/
-media/*.png
-media/*.jpg
-media/*.bmp
-media/*.ico
+web/media/*.png
+web/media/*.jpg
+web/media/*.bmp
+web/media/*.ico
 
 # Distribution / packaging
 .Python
