@@ -43,7 +43,13 @@
 <main>
     <div class="container">
         <div class="section">
-            <h3>Nadpis</h3>
+            <h3>{{ event.name }}</h3>
+
+            <div class="col s12">
+                {{ event.text }}
+            </div>
+            <br>
+            
             <div class="slider">
                 <ul class="slides">
                     {% for img in event.get_images %}
@@ -71,9 +77,6 @@
             <br>
             <br>
             <div class="row">
-                <div class="col s12">
-                    {{ event.text }}
-                </div>
 
                 <h4>Komentáře</h4>
                 {% if user %}
