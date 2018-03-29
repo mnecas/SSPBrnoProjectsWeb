@@ -71,7 +71,12 @@ def edit_event(request):
     if request.method == "GET":
         event = request.GET.get("event", None)
         if event:
-            return render(request, "edit_event.html", {"event": Event.objects.filter(name=event).first()})
+            user = None
+            if "username" in request.session.keys():
+                if request.session["username"]:
+                    user = User.objects.filter(username=request.session["username"]).first()
+            return render(request, "edit_event.html", {"event": Event.objects.filter(name=event).first(),
+                                                       "user":user})
         else:
             return redirect("/")
     elif request.method == "POST":
@@ -234,5 +239,5 @@ def save_edit(request):
                 fs = FileSystemStorage(location="media/image/events/" + name)
                 fs.save(img.name, img)
         return redirect("/")
-    elif request.method == "POST":
+    elif request.method == "GET":
         return redirect("/")

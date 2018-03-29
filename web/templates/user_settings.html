@@ -18,10 +18,23 @@
     <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo hide-on-med-and-down">Projekty
         SSPBrno</a>
         <ul class="right hide-on-med-and-down">
-            {% if logged %}
-                <li><a href="/login">Přihlásit se</a></li>
+            {% if user %}
+                <li><a href="/user_settings">
+                    {% if user.icon %}
+                        <img src="media/{{ user.icon }}" width="50px" height="50" class="circle responsive-img">
+                        <!-- notice the "circle" class -->
+                    {% else %}
+                        <img height="50px" width="50px" src="https://i.stack.imgur.com/dr5qp.jpg"
+                             class="circle responsive-img">
+                        <!-- notice the "circle" class -->
+                    {% endif %}
+                    <span class="black-text">{{ user.username }}</span>
+                </a>
+                </li>
+                <li><a href="/user_logout">Odhlasit se</a></li>
             {% else %}
                 <li><a href="/login">Přihlásit se</a></li>
+                <li><a href="/register">Zaregistrovat se</a></li>
             {% endif %}
         </ul>
     </div>
