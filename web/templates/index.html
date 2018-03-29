@@ -30,7 +30,8 @@
             {% if user %}
                 <li><a href="/user_settings">
                     {% if user.icon %}
-                        <img src="media/{{ user.icon }}" width="50px" height="50" class="circle responsive-img"> <!-- notice the "circle" class -->
+                        <img src="media/{{ user.icon }}" width="50px" height="50" class="circle responsive-img">
+                        <!-- notice the "circle" class -->
                     {% else %}
                         <img height="50px" width="50px" src="https://i.stack.imgur.com/dr5qp.jpg"
                              class="circle responsive-img">
@@ -47,13 +48,13 @@
         </ul>
     </div>
 </nav>
-
-<div class="fixed-action-btn click-to-toggle">
-    <a class="btn-floating btn-large red" href="create_event">
-        <i class="large material-icons waves-effect waves-light">add</i>
-    </a>
-</div>
-
+{% if user.is_admin %}
+    <div class="fixed-action-btn click-to-toggle">
+        <a class="btn-floating btn-large red" href="create_event">
+            <i class="large material-icons waves-effect waves-light">add</i>
+        </a>
+    </div>
+{% endif %}
 <main>
     <div class="container">
         <div class="section">
@@ -65,12 +66,14 @@
                             <div class="card-image">
                                 <img src="media/{{ event.get_images.first.image }}" height="400">
                                 <span class="card-title" style="color: black">{{ event.name }}</span>
-                                <a class="btn-floating halfway-fab waves-effect waves-light red"
-                                   style="margin-right: 50px" href="edit_event?event={{ event }}">
-                                    <i class="material-icons">edit</i></a>
-                                <a class="btn-floating halfway-fab waves-effect waves-light red"
-                                   href="remove_event?event={{ event }}">
-                                    <i class="material-icons">delete</i></a>
+                                {% if user.is_admin %}
+                                    <a class="btn-floating halfway-fab waves-effect waves-light red"
+                                       style="margin-right: 50px" href="edit_event?event={{ event }}">
+                                        <i class="material-icons">edit</i></a>
+                                    <a class="btn-floating halfway-fab waves-effect waves-light red"
+                                       href="remove_event?event={{ event }}">
+                                        <i class="material-icons">delete</i></a>
+                                {% endif %}
                             </div>
                             <div class="card-content">
                                 <p>{{ event.text }}</p>

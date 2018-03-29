@@ -14,8 +14,7 @@ def index(request):
 
     return render(request, "index.html",
                   {"events": Event.objects.all(),
-                   "user": user,
-                   "user_is_admin": user.is_admin})
+                   "user": user})
 
 
 def login(request):
@@ -55,7 +54,7 @@ def create_event(request):
         text = request.POST.get("text", "")
         images = request.FILES.getlist('images')
         if name and text:
-            event = Event(name=name, text=text,creator=User.objects.filter(username=username).first())
+            event = Event(name=name, text=text, creator=User.objects.filter(username=username).first())
             event.save()
             for img in images:
                 fs = FileSystemStorage()
@@ -83,9 +82,14 @@ def edit_event(request):
 def info(request):
     if request.method == "GET":
         event_name = request.GET.get("event", None)
+        user = None
+        if "username" in request.session.keys():
+            if request.session["username"]:
+                user = User.objects.filter(username=request.session["username"]).first()
         if event_name:
             event = Event.objects.filter(name=event_name).first()
-            return render(request, "info.html", {"event": event})
+            return render(request, "info.html", {"event": event,
+                                                 "user": user})
         return redirect("/")
     else:
         if "username" in request.session.keys():
