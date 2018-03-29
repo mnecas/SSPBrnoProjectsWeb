@@ -56,9 +56,9 @@ def create_event(request):
             event = Event(name=name, text=text, creator=User.objects.filter(username=username).first())
             event.save()
             for img in images:
-                fs = FileSystemStorage()
+                fs = FileSystemStorage(location="media/image/events/" + name)
                 fs.save(img.name, img)
-                Image(image=img, event=event).save()
+                Image(image="image/events/"+name+"/"+img.name, event=event).save()
 
         return redirect("/")
 

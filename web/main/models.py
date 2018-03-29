@@ -41,7 +41,7 @@ class Event(models.Model):
 
 
 class Image(models.Model):
-    image = models.ImageField()
+    image = models.CharField(max_length=300)
     event = models.ForeignKey(Event, on_delete=models.CASCADE, default=None)
 
 
