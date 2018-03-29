@@ -27,7 +27,7 @@ class User(models.Model):
 class Event(models.Model):
     name = models.CharField(max_length=30, default="")
     text = models.TextField(max_length=3000, default="")
-    creator = models.ForeignKey(User, on_delete=models.CASCADE)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE,null=True,default=None)
 
     def get_images(self):
         return Image.objects.filter(event=self)
