@@ -36,13 +36,21 @@
                     {% endfor %}
                 </ul>
             </div>
-            <div class="rating">
-                <a href="/rate?value=1">☆</a>
-                <a href="/rate?value=2">☆</a>
-                <a href="/rate?value=3">☆</a>
-                <a href="/rate?value=4">☆</a>
-                <a href="/rate?value=5">☆</a>
-            </div>
+            {% load poll_extras %}
+            {% if user.id|rated:event.id %}
+                <div>
+                    {{ average_rating }}<span>☆</span>
+                </div>
+            {% else %}
+                <div>
+                    <a href="/rate?value=1&user_id={{ user.id }}&event_id={{ event.id }}">☆</a>
+                    <a href="/rate?value=2&user_id={{ user.id }}&event_id={{ event.id }}">☆</a>
+                    <a href="/rate?value=3&user_id={{ user.id }}&event_id={{ event.id }}">☆</a>
+                    <a href="/rate?value=4&user_id={{ user.id }}&event_id={{ event.id }}">☆</a>
+                    <a href="/rate?value=5&user_id={{ user.id }}&event_id={{ event.id }}">☆</a>
+                </div>
+
+            {% endif %}
             <br>
             <br>
             <div class="row">

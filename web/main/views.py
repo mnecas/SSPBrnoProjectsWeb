@@ -1,8 +1,7 @@
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
 
-from django.http import HttpResponse
-from .models import Image, Event, User, Comment
+from .models import Image, Event, User, Comment, Anketa
 
 
 # Create your views here.
@@ -88,8 +87,20 @@ def info(request):
                 user = User.objects.filter(username=request.session["username"]).first()
         if event_name:
             event = Event.objects.filter(name=event_name).first()
+            ratings = Anketa.objects.filter(event=event)
+            sum = 0
+            for rtg in ratings:
+                sum += rtg.points
+            if len(ratings) > 0:
+                avg = sum / len(ratings)
+                resp = "%.2f" % avg
+                return render(request, "info.html", {"event": event,
+                                                     "user": user,
+                                                     "average_rating": resp})
             return render(request, "info.html", {"event": event,
-                                                 "user": user})
+                                                 "user": user,
+                                                 "average_rating": "none"})
+
         return redirect("/")
     elif request.method == "POST":
         if "username" in request.session.keys():
@@ -171,11 +182,25 @@ def user_settings(request):
             user.update(password=password)
         return redirect("/user_settings")
 
+
 def user_logout(request):
     del request.session["username"]
     return redirect("/")
 
+
 def rate(request):
+    if request.method == "GET":
+        value = request.GET.get("value", "")
+        user_id = request.GET.get("user_id", "")
+        event_id = request.GET.get("event_id", "")
+        user = User.objects.filter(id=user_id).first()
+        event = Event.objects.filter(id=event_id).first()
+        rating, created = Anketa.objects.get_or_create(user=user, event=event)
+        if created:
+            rating.points = int(value)
+            rating.save()
+
+        return redirect("/info?event=" + event.name)
     return redirect("/")
 
 
@@ -206,7 +231,7 @@ def save_edit(request):
         for img in images:
             image, created = Image.objects.get_or_create(image=img, event=event.first())
             if created:
-                fs = FileSystemStorage(location="media/image/events/"+name)
+                fs = FileSystemStorage(location="media/image/events/" + name)
                 fs.save(img.name, img)
         return redirect("/")
     elif request.method == "POST":
