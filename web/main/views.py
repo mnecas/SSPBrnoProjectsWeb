@@ -48,7 +48,7 @@ def register(request):
 def create_event(request):
     if request.method == "GET":
         return render(request, "create_event.html")
-    else:
+    elif request.method == "POST":
         username = request.session["username"]
         name = request.POST.get("title", "")
         text = request.POST.get("text", "")
@@ -75,7 +75,7 @@ def edit_event(request):
             return render(request, "edit_event.html", {"event": Event.objects.filter(name=event).first()})
         else:
             return redirect("/")
-    else:
+    elif request.method == "POST":
         return redirect("/")
 
 
@@ -91,14 +91,16 @@ def info(request):
             return render(request, "info.html", {"event": event,
                                                  "user": user})
         return redirect("/")
-    else:
+    elif request.method == "POST":
         if "username" in request.session.keys():
             user = request.session["username"]
             comment_text = request.POST.get("comment_text", "")
             event_id = request.POST.get("event_id", "")
-            Comment(event=Event.objects.filter(id=event_id).first(),
+            event=Event.objects.filter(id=event_id).first()
+            Comment(event=event,
                     user=User.objects.filter(username=user).first(),
                     text=comment_text).save()
+            return redirect("/info?event="+event.name)
         return redirect("/")
 
 
@@ -108,14 +110,33 @@ def edit_comment(request):
 
 def remove_comment(request):
     if request.method == "GET":
+
+        user = None
+        if "username" in request.session.keys():
+            if request.session["username"]:
+                user = User.objects.filter(username=request.session["username"]).first()
+        if not user.is_admin:
+            return redirect("/")
+
         comment_id = request.GET.get("comment_id", "")
+        event = request.GET.get("event", "")
+
         if comment_id:
             Comment.objects.filter(id=comment_id).first().delete()
-        return redirect("/")
+
+        return redirect("/info?event=" + event)
 
 
 def remove_image(request):
     if request.method == "GET":
+
+        user = None
+        if "username" in request.session.keys():
+            if request.session["username"]:
+                user = User.objects.filter(username=request.session["username"]).first()
+        if not user.is_admin:
+            return redirect("/")
+
         img = request.GET.get("img", None)
         event = request.GET.get("event", None)
         if img and event:
@@ -131,7 +152,7 @@ def user_settings(request):
         return render(request, "user_settings.html",
                       {"events": Event.objects.all(),
                        "user": user})
-    else:
+    elif request.method == "POST":
         image = request.FILES['image']
         user = User.objects.filter(username=request.session["username"])
         fs = FileSystemStorage()
@@ -147,6 +168,14 @@ def user_logout(request):
 
 def remove_event(request):
     if request.method == "GET":
+
+        user = None
+        if "username" in request.session.keys():
+            if request.session["username"]:
+                user = User.objects.filter(username=request.session["username"]).first()
+        if not user.is_admin:
+            return redirect("/")
+
         event = request.GET.get("event", None)
         if event:
             Event.objects.filter(name=event).first().delete()
@@ -167,7 +196,7 @@ def save_edit(request):
                 fs = FileSystemStorage()
                 fs.save(img.name, img)
         return redirect("/")
-    else:
+    elif request.method == "POST":
         return redirect("/")
 
 

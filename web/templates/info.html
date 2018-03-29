@@ -63,6 +63,7 @@
                                     <div class="col s2">
                                         <img src="media/{{ comment.user.icon }}"
                                              class="circle responsive-img">
+                                      {{ comment.user.username }}
                                     </div>
                                     <div class="col s10">
                                       <span class="black-text">
@@ -72,7 +73,7 @@
 
                                     {% if user.is_admin %}
                                         <div class="col s1">
-                                            <a href="/remove_comment?comment_id={{ comment.id }}"><i
+                                            <a href="/remove_comment?comment_id={{ comment.id }}&event={{ event.name }}"><i
                                                     class="material-icons">delete</i></a>
                                         </div>
                                     {% endif %}
