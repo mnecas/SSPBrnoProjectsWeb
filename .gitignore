@@ -4,13 +4,9 @@ __pycache__/
 *$py.class
 
 .idea/
-web/media/*.png
-web/media/*.jpg
-web/media/*.bmp
-web/media/*.ico
-!web/media/image/user_default/user.png
 
-# Distribution / packaging
+
+# Distribution / packagingx
 .Python
 build/
 develop-eggs/
