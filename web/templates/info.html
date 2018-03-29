@@ -109,7 +109,7 @@
                                       </span>
                                 </div>
 
-                                {% if user.is_admin %}
+                                {% if user == comment.user %}
                                     <div class="col s1">
                                         <a href="/remove_comment?comment_id={{ comment.id }}&event={{ event.name }}"><i
                                                 class="material-icons">delete</i></a>
