@@ -175,6 +175,9 @@ def user_logout(request):
     del request.session["username"]
     return redirect("/")
 
+def rate(request):
+    return redirect("/")
+
 
 def remove_event(request):
     if request.method == "GET":

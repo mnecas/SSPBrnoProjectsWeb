@@ -1,3 +1,4 @@
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
@@ -27,7 +28,7 @@ class User(models.Model):
 class Event(models.Model):
     name = models.CharField(max_length=30, default="")
     text = models.TextField(max_length=3000, default="")
-    creator = models.ForeignKey(User, on_delete=models.CASCADE,null=True,default=None)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, null=True, default=None)
 
     def get_images(self):
         return Image.objects.filter(event=self)
@@ -41,7 +42,7 @@ class Event(models.Model):
 
 class Image(models.Model):
     image = models.ImageField()
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, default=None)
 
 
 class Comment(models.Model):
@@ -51,6 +52,10 @@ class Comment(models.Model):
 
 
 class Anketa(models.Model):
-    question = models.CharField(max_length=30, default="")
     event = models.ForeignKey(Event, on_delete=models.CASCADE, default=None)
-    # points = http://s3.amazonaws.com/37assets/svn/765-default-avatar.png
+    points = models.IntegerField(default=1,
+                                 validators=[
+                                     MaxValueValidator(5),
+                                     MinValueValidator(1)
+                                 ])
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
