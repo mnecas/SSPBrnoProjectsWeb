@@ -58,7 +58,11 @@
                     </div>
                     <div class="row">
                         <div class="file-field input-field col s2">
+                            {% if user.icon  %}
                             <img class="materialboxed" width="120px" src="media/{{ user.icon }}">
+                            {% else %}
+                            <img class="materialboxed" width="120px" src="https://i.stack.imgur.com/dr5qp.jpg">
+                            {% endif %}
                             <input type="file" name="image" onChange="this.form.submit()">
                         </div>
                         <button class="btn waves-effect waves-light" type="submit" name="action">Submit
