@@ -4,8 +4,8 @@ This is repo of team project for our school.
 
 ## Installation
 
-* Check out [GithubGraphs](https://github.com/ocasek/SSPBrnoProjectsWeb)
-* `cd` to `GithubGraphs/Internship_project`
+* Check out [SSPBrnoProjectsWeb](https://github.com/ocasek/SSPBrnoProjectsWeb)
+* `cd` to `SSPBrnoProjectsWeb/web`
 * Run:
   `pip install -r requirements.txt`
 
