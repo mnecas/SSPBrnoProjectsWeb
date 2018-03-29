@@ -156,7 +156,7 @@ def user_settings(request):
         try:
             image = request.FILES['image']
             user = User.objects.filter(username=request.session["username"])
-            fs = FileSystemStorage()
+            fs = FileSystemStorage(location="media/image/users")
             fs.save(image.name, image)
             user.update(icon=image)
         except:
@@ -206,7 +206,7 @@ def save_edit(request):
         for img in images:
             image, created = Image.objects.get_or_create(image=img, event=event.first())
             if created:
-                fs = FileSystemStorage()
+                fs = FileSystemStorage(location="media/image/events/"+name)
                 fs.save(img.name, img)
         return redirect("/")
     elif request.method == "POST":
