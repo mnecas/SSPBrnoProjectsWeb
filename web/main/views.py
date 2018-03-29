@@ -96,11 +96,11 @@ def info(request):
             user = request.session["username"]
             comment_text = request.POST.get("comment_text", "")
             event_id = request.POST.get("event_id", "")
-            event=Event.objects.filter(id=event_id).first()
+            event = Event.objects.filter(id=event_id).first()
             Comment(event=event,
                     user=User.objects.filter(username=user).first(),
                     text=comment_text).save()
-            return redirect("/info?event="+event.name)
+            return redirect("/info?event=" + event.name)
         return redirect("/")
 
 
@@ -153,13 +153,23 @@ def user_settings(request):
                       {"events": Event.objects.all(),
                        "user": user})
     elif request.method == "POST":
-        image = request.FILES['image']
-        user = User.objects.filter(username=request.session["username"])
-        fs = FileSystemStorage()
-        fs.save(image.name, image)
-        user.update(icon=image)
+        try:
+            image = request.FILES['image']
+            user = User.objects.filter(username=request.session["username"])
+            fs = FileSystemStorage()
+            fs.save(image.name, image)
+            user.update(icon=image)
+        except:
+            # USER HAVNT CHANGE ICON
+            pass
+        password = request.POST.get("pass1", "")
+        password2 = request.POST.get("pass2", "")
+        old_pass = request.POST.get("old_pass", "")
+        username = request.session["username"]
+        user = User.objects.filter(username=username)
+        if user.first().password == old_pass and password and password2 and password == password2 and username:
+            user.update(password=password)
         return redirect("/user_settings")
-
 
 def user_logout(request):
     del request.session["username"]
@@ -198,20 +208,3 @@ def save_edit(request):
         return redirect("/")
     elif request.method == "POST":
         return redirect("/")
-
-
-def change_password(request):
-    if request.method == "GET":
-        return render(request, "change_pass.html")
-    elif request.method == "POST":
-        password = request.POST.get("pass1", "")
-        password2 = request.POST.get("pass2", "")
-        old_pass = request.POST.get("old_pass", "")
-        username = request.session["username"]
-        if old_pass and password and password2 and password == password2 and username:
-            user = User.objects.filter(username=username)
-            if user:
-                user.update(password=password)
-                user.save()
-                return redirect("/edit_user.html")
-        return render(request, "change_pass.html", {"error": "passwords are not same or old password is incorrect!"})
