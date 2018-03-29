@@ -11,9 +11,11 @@ def index(request):
     if "username" in request.session.keys():
         if request.session["username"]:
             user = User.objects.filter(username=request.session["username"]).first()
+
     return render(request, "index.html",
                   {"events": Event.objects.all(),
-                   "user": user})
+                   "user": user,
+                   "user_is_admin": user.is_admin})
 
 
 def login(request):
@@ -48,11 +50,12 @@ def create_event(request):
     if request.method == "GET":
         return render(request, "create_event.html")
     else:
+        username = request.session["username"]
         name = request.POST.get("title", "")
         text = request.POST.get("text", "")
         images = request.FILES.getlist('images')
         if name and text:
-            event = Event(name=name, text=text)
+            event = Event(name=name, text=text,creator=User.objects.filter(username=username).first())
             event.save()
             for img in images:
                 fs = FileSystemStorage()
@@ -87,15 +90,17 @@ def info(request):
     else:
         if "username" in request.session.keys():
             user = request.session["username"]
-            comment_text = request.POST.get("comment_text","")
-            event_id = request.POST.get("event_id","")
+            comment_text = request.POST.get("comment_text", "")
+            event_id = request.POST.get("event_id", "")
             Comment(event=Event.objects.filter(id=event_id).first(),
                     user=User.objects.filter(username=user).first(),
                     text=comment_text).save()
         return redirect("/")
 
+
 def edit_comment(request):
     pass
+
 
 def remove_comment(request):
     if request.method == "GET":
@@ -103,6 +108,8 @@ def remove_comment(request):
         if comment_id:
             Comment.objects.filter(id=comment_id).first().delete()
         return redirect("/")
+
+
 def remove_image(request):
     if request.method == "GET":
         img = request.GET.get("img", None)
