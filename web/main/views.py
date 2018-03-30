@@ -149,7 +149,7 @@ def edit_comment(request):
         text = request.POST.get("text", "")
         comm = Comment.objects.filter(id=comment_id)
         comm.update(text=text)
-        return redirect("/")
+        return redirect("/info?event="+str(comm.first().event.id))
 
 
 def remove_comment(request):
