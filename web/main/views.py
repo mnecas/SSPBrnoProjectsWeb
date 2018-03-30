@@ -134,7 +134,22 @@ def info(request):
 
 
 def edit_comment(request):
-    pass
+    if request.method == "GET":
+        user = None
+        if "username" in request.session.keys():
+            if request.session["username"]:
+                user = User.objects.filter(username=request.session["username"]).first()
+
+        comment_id = request.GET.get("comment_id", "")
+        comm = Comment.objects.filter(id=comment_id).first()
+        return render(request, "edit_comment.html", {"comment": comm, "user":user})
+
+    if request.method == "POST":
+        comment_id = request.POST.get("comment_id", "")
+        text = request.POST.get("text", "")
+        comm = Comment.objects.filter(id=comment_id)
+        comm.update(text=text)
+        return redirect("/")
 
 
 def remove_comment(request):

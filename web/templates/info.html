@@ -111,6 +111,8 @@
 
                                 {% if user.is_admin or user == comment.user %}
                                     <div class="col s1">
+                                        <a href="edit_comment?comment_id={{ comment.id }}">
+                                        <i class="material-icons">edit</i></a>
                                         <a href="/remove_comment?comment_id={{ comment.id }}&event={{ event.id }}"><i
                                                 class="material-icons">delete</i></a>
                                     </div>
