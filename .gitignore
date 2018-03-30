@@ -4,11 +4,10 @@ __pycache__/
 *$py.class
 
 .idea/
-web/media/*.png
-web/media/*.bmp
-web/media/*.ico
-web/media/*.jpg
-!web/media/image/user_default/user.png
+web/media/events/*.png
+web/media/events/*.bmp
+web/media/events/*.ico
+web/media/events/*.jpg
 
 # Distribution / packagingx
 .Python
