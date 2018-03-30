@@ -21,17 +21,17 @@
             {% if user %}
                 <li><a href="/user_settings">
                     {% if user.icon %}
-                        <img src="media/{{ user.icon }}" width="50px" height="50" class="circle responsive-img">
+                        <img src="media/{{ user.icon }}" width="40px" height="50px" class="circle responsive-img custom4">
                         <!-- notice the "circle" class -->
                     {% else %}
-                        <img height="50px" width="50px" src="https://i.stack.imgur.com/dr5qp.jpg"
-                             class="circle responsive-img">
+                        <img height="50px" width="40px" src="https://i.stack.imgur.com/dr5qp.jpg"
+                             class="circle responsive-img custom4">
                         <!-- notice the "circle" class -->
                     {% endif %}
                     <span class="black-text">{{ user.username }}</span>
                 </a>
                 </li>
-                <li><a href="/user_logout">Odhlasit se</a></li>
+                <li><a href="/user_logout">Odhlásit se</a></li>
             {% else %}
                 <li><a href="/login">Přihlásit se</a></li>
                 <li><a href="/register">Zaregistrovat se</a></li>
@@ -51,7 +51,9 @@
 
 
                     <div class="row">
-
+                        <div class="col s12">
+                            <h4>Změnit heslo</h4>
+                        </div>
                         <div class="input-field col s3">
                             <i class="material-icons prefix">lock</i>
                             <input id="icon_telephone" type="password" name="old_pass" class="validate">
@@ -70,6 +72,9 @@
 
                     </div>
                     <div class="row">
+                        <div class="col s12">
+                            <h4>Změnit avatar</h4>
+                        </div>
                         <div class="file-field input-field col s2">
                             {% if user.icon  %}
                             <img class="materialboxed" width="120px" src="media/{{ user.icon }}">
@@ -78,12 +83,12 @@
                             {% endif %}
                             <input type="file" name="image" onChange="this.form.submit()">
                         </div>
+                        </div>
+                        <div>
                         <button class="btn waves-effect waves-light" type="submit" name="action">Submit
                             <i class="material-icons right">send</i>
                         </button>
-                    </div>
-
-
+                        </div>
                 </form>
             </div>
 

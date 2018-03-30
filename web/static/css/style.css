@@ -106,7 +106,7 @@ body {
 }
 
 .custom1 {
-    font-size: 30px
+    font-size: 18px
 }
 
 .custom2 {
@@ -118,7 +118,7 @@ body {
 }
 
 .custom4 {
-    height: 100px;
+    vertical-align: middle;
 }
 
 body {
