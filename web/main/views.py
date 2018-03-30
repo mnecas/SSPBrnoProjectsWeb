@@ -114,11 +114,13 @@ def info(request):
             if len(ratings)>0:
                return render(request, "info.html", {"event": event,
                                                  "user": user,
-                                                 "average_rating": "%.2f"%ratings.aggregate(Avg('points'))["points__avg"]})
+                                                 "average_rating": "%.2f"%ratings.aggregate(Avg('points'))["points__avg"],
+                                                 "study_material": event.get_study_mat()})
 
             return render(request, "info.html", {"event": event,
                                                  "user": user,
-                                                 "average_rating": "none"})
+                                                 "average_rating": "none",
+                                                 "study_material": event.get_study_mat()})
         return redirect("/")
     elif request.method == "POST":
         if "username" in request.session.keys():
@@ -260,7 +262,7 @@ def study_material_save(request):
             if request.session["username"]:
                 user = User.objects.filter(username=request.session["username"]).first()
         event = Event.objects.filter(id=event_id).first()
-        return render(request, "study_material.html", {"user": user, "event": event})
+        return render(request, "study_material_edit.html", {"user": user, "event": event})
 
     elif request.method == "POST":
         event_id = request.POST.get("event_id", "")
@@ -269,8 +271,18 @@ def study_material_save(request):
         for file in files:
             fs = FileSystemStorage(location="media/image/events/" + event.name)
             fs.save(file.name, file)
-            Study_material.objects.create(event=event, path="media/image/events/" + event.name)
+            Study_material.objects.create(event=event, path="media/image/events/" + event.name, name=file.name)
         return redirect("/info?event=" + str(event.id))
 
-
+def study_mat(request):
+    if request.method == "GET":
+        event_id = request.GET.get("event_id", "")
+        user = None
+        if "username" in request.session.keys():
+            if request.session["username"]:
+                user = User.objects.filter(username=request.session["username"]).first()
+        event = Event.objects.filter(id=event_id).first()
+        return render(request, "study_material.html", {"user": user, "event": event, "study_material":event.get_study_mat()})
+    elif request.method == "POST":
+        redirect("/")
 

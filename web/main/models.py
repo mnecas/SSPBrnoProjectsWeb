@@ -64,5 +64,6 @@ class Anketa(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
 
 class Study_material(models.Model):
+    name = models.CharField(max_length=300)
     path = models.CharField(max_length=300)
     event = models.ForeignKey(Event, on_delete=models.CASCADE, default=None)
