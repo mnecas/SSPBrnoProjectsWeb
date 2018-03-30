@@ -98,10 +98,10 @@
                     <div class="col s12">
                         <div class="grey lighten-5 z-depth-1">
                             <div class="row valign-wrapper">
-                                <div class="col s2">
+                                <div class="col s2" style="text-align: center">
                                     <img src="media/{{ comment.user.icon }}"
-                                         class="circle responsive-img">
-                                    {{ comment.user.username }}
+                                         class="circle-small responsive-img">
+                                         {{ comment.user.username }}
                                 </div>
                                 <div class="col s10">
                                       <span class="black-text">
@@ -158,10 +158,4 @@
         $('.slider').slider({full_width: true});
     });
 </script>
-<script>
-    $(document).ready(function () {
-        $('.scrollspy').scrollSpy();
-    });
-</script>
-
 </html>
