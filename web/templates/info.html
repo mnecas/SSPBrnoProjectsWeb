@@ -21,17 +21,17 @@
             {% if user %}
                 <li><a href="/user_settings">
                     {% if user.icon %}
-                        <img src="media/{{ user.icon }}" width="50px" height="50" class="circle responsive-img">
+                        <img src="media/{{ user.icon }}" width="40px" height="50px" class="circle responsive-img custom4">
                         <!-- notice the "circle" class -->
                     {% else %}
-                        <img height="50px" width="50px" src="https://i.stack.imgur.com/dr5qp.jpg"
-                             class="circle responsive-img">
+                        <img height="50px" width="40px" src="https://i.stack.imgur.com/dr5qp.jpg"
+                             class="circle responsive-img custom4">
                         <!-- notice the "circle" class -->
                     {% endif %}
                     <span class="black-text">{{ user.username }}</span>
                 </a>
                 </li>
-                <li><a href="/user_logout">Odhlasit se</a></li>
+                <li><a href="/user_logout">Odhlásit se</a></li>
             {% else %}
                 <li><a href="/login">Přihlásit se</a></li>
                 <li><a href="/register">Zaregistrovat se</a></li>
@@ -87,7 +87,7 @@
                             <textarea id="name" name="comment_text" class="materialize-textarea"></textarea>
                             <label for="name">Komentář</label>
                         </div>
-                        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                        <button class="btn waves-effect waves-light" type="submit" name="action">Odeslat
                             <i class="material-icons right">send</i>
                         </button>
                         <br/>
