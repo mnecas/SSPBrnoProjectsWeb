@@ -68,10 +68,10 @@
                                 <span class="card-title" style="color: black">{{ event.name }}</span>
                                 {% if user.is_admin %}
                                     <a class="btn-floating halfway-fab waves-effect waves-light red"
-                                       style="margin-right: 50px" href="edit_event?event={{ event }}">
+                                       style="margin-right: 50px" href="edit_event?event={{ event.id }}">
                                         <i class="material-icons">edit</i></a>
                                     <a class="btn-floating halfway-fab waves-effect waves-light red"
-                                       href="remove_event?event={{ event }}">
+                                       href="remove_event?event={{ event.id }}">
                                         <i class="material-icons">delete</i></a>
                                 {% endif %}
                             </div>
@@ -80,7 +80,7 @@
                             </div>
 
                             <div class="card-action">
-                                <a href="info?event={{ event.name }}">Zobrazit více</a>
+                                <a href="info?event={{ event.id }}">Zobrazit více</a>
                             </div>
                         </div>
                     </div>

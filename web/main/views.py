@@ -2,6 +2,7 @@ from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
 
 from .models import Image, Event, User, Comment, Anketa
+from django.db.models import Avg
 
 
 # Create your views here.
@@ -75,7 +76,7 @@ def edit_event(request):
             if "username" in request.session.keys():
                 if request.session["username"]:
                     user = User.objects.filter(username=request.session["username"]).first()
-            return render(request, "edit_event.html", {"event": Event.objects.filter(name=event).first(),
+            return render(request, "edit_event.html", {"event": Event.objects.filter(id=event).first(),
                                                        "user":user})
         else:
             return redirect("/")
@@ -83,29 +84,41 @@ def edit_event(request):
         return redirect("/")
 
 
-def info(request):
+
+def remove_event(request):
     if request.method == "GET":
-        event_name = request.GET.get("event", None)
+
         user = None
         if "username" in request.session.keys():
             if request.session["username"]:
                 user = User.objects.filter(username=request.session["username"]).first()
-        if event_name:
-            event = Event.objects.filter(name=event_name).first()
+        if not user.is_admin:
+            return redirect("/")
+
+        event = request.GET.get("event", None)
+        if event:
+            Event.objects.filter(id=event).first().delete()
+        return redirect("/")
+
+
+def info(request):
+    if request.method == "GET":
+        evet_id = request.GET.get("event", None)
+        user = None
+        if "username" in request.session.keys():
+            if request.session["username"]:
+                user = User.objects.filter(username=request.session["username"]).first()
+        if evet_id:
+            event = Event.objects.filter(id=evet_id).first()
             ratings = Anketa.objects.filter(event=event)
-            sum = 0
-            for rtg in ratings:
-                sum += rtg.points
-            if len(ratings) > 0:
-                avg = sum / len(ratings)
-                resp = "%.2f" % avg
-                return render(request, "info.html", {"event": event,
-                                                     "user": user,
-                                                     "average_rating": resp})
+            if len(ratings)>0:
+               return render(request, "info.html", {"event": event,
+                                                 "user": user,
+                                                 "average_rating": "%.2f"%ratings.aggregate(Avg('points'))["points__avg"]})
+
             return render(request, "info.html", {"event": event,
                                                  "user": user,
                                                  "average_rating": "none"})
-
         return redirect("/")
     elif request.method == "POST":
         if "username" in request.session.keys():
@@ -116,7 +129,7 @@ def info(request):
             Comment(event=event,
                     user=User.objects.filter(username=user).first(),
                     text=comment_text).save()
-            return redirect("/info?event=" + event.name)
+            return redirect("/info?event=" + str(event.id))
         return redirect("/")
 
 
@@ -135,12 +148,12 @@ def remove_comment(request):
             return redirect("/")
 
         comment_id = request.GET.get("comment_id", "")
-        event = request.GET.get("event", "")
+        event_id = request.GET.get("event", "")
 
         if comment_id:
             Comment.objects.filter(id=comment_id).first().delete()
 
-        return redirect("/info?event=" + event)
+        return redirect("/info?event=" + str(event_id))
 
 
 def remove_image(request):
@@ -157,7 +170,7 @@ def remove_image(request):
         event = request.GET.get("event", None)
         if img and event:
             Image.objects.filter(image=img).first().delete()
-            return redirect("/edit_event?event=" + event)
+            return redirect("/edit_event?event=" + str(event.id))
         else:
             return redirect("/")
 
@@ -205,24 +218,8 @@ def rate(request):
             rating.points = int(value)
             rating.save()
 
-        return redirect("/info?event=" + event.name)
+        return redirect("/info?event=" + str(event.id))
     return redirect("/")
-
-
-def remove_event(request):
-    if request.method == "GET":
-
-        user = None
-        if "username" in request.session.keys():
-            if request.session["username"]:
-                user = User.objects.filter(username=request.session["username"]).first()
-        if not user.is_admin:
-            return redirect("/")
-
-        event = request.GET.get("event", None)
-        if event:
-            Event.objects.filter(name=event).first().delete()
-        return redirect("/")
 
 
 def save_edit(request):
