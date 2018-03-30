@@ -159,8 +159,6 @@ def remove_comment(request):
         if "username" in request.session.keys():
             if request.session["username"]:
                 user = User.objects.filter(username=request.session["username"]).first()
-        if not user.is_admin:
-            return redirect("/")
 
         comment_id = request.GET.get("comment_id", "")
         event_id = request.GET.get("event", "")
