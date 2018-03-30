@@ -35,6 +35,7 @@ urlpatterns = [
     path('info', views.info, name="info"),
     path('rate', views.rate, name="rate"),
     path('edit_comment', views.edit_comment, name="edit_comment"),
+    path('study_material_save', views.study_material_save, name="study_material_save"),
     path('remove_comment', views.remove_comment, name="remove_comment"),
     path('', views.index, name="index"),
 ]

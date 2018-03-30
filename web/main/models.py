@@ -36,6 +36,9 @@ class Event(models.Model):
     def get_comments(self):
         return Comment.objects.filter(event=self)
 
+    def get_study_mat(self):
+        return Study_material.objects.filter(event=self)
+
     def __str__(self):
         return str(self.name)
 
@@ -59,3 +62,7 @@ class Anketa(models.Model):
                                      MinValueValidator(1)
                                  ])
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
+
+class Study_material(models.Model):
+    path = models.CharField(max_length=300)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, default=None)

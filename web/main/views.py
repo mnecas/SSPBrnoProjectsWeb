@@ -1,7 +1,7 @@
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
 
-from .models import Image, Event, User, Comment, Anketa
+from .models import Image, Event, User, Comment, Anketa, Study_material
 from django.db.models import Avg
 
 
@@ -251,3 +251,26 @@ def save_edit(request):
         return redirect("/")
     elif request.method == "GET":
         return redirect("/")
+
+def study_material_save(request):
+    if request.method == "GET":
+        event_id = request.GET.get("event_id", "")
+        user = None
+        if "username" in request.session.keys():
+            if request.session["username"]:
+                user = User.objects.filter(username=request.session["username"]).first()
+        event = Event.objects.filter(id=event_id).first()
+        return render(request, "study_material.html", {"user": user, "event": event})
+
+    elif request.method == "POST":
+        event_id = request.POST.get("event_id", "")
+        files = request.FILES.getlist('files')
+        event = Event.objects.filter(id=event_id).first()
+        for file in files:
+            fs = FileSystemStorage(location="media/image/events/" + event.name)
+            fs.save(file.name, file)
+            Study_material.objects.create(event=event, path="media/image/events/" + event.name)
+        return redirect("/info?event=" + str(event.id))
+
+
+
