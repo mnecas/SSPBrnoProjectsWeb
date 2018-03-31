@@ -84,7 +84,8 @@ def edit_event(request):
             except:
                 users_list = []
             return render(request, "edit_event.html", {"event": event,
-                                                       "user":user, "added_users":users_list})
+                                                       "user":user, "added_users":users_list,
+                                                       "all_users":User.objects.all()})
         else:
             return redirect("/")
     elif request.method == "POST":

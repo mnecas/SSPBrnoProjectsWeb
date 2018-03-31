@@ -82,6 +82,19 @@
                         </p>
 
                     </div>
+
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <select multiple>
+                              <option value="" disabled selected>Choose your option</option>
+                                {% for user in all_users %}
+                                    <option value="">{{user}}</option>
+                                {% endfor %}
+                            </select>
+                            <label>Materialize Multiple Select</label>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="file-field input-field">
                             <div class="btn">
@@ -149,7 +162,13 @@
 </footer>
 
 </body>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
 <script type='text/javascript' src="{% static 'js/materialize.js' %}"></script>
+<script>
+    $(document).ready(function(){
+    $('select').formSelect();
+  });
+</script>
 </html>
