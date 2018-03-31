@@ -72,14 +72,19 @@ def add_event(request):
 
 def edit_event(request):
     if request.method == "GET":
-        event = request.GET.get("event", None)
-        if event:
+        event_id = request.GET.get("event", None)
+        if event_id:
             user = None
             if "username" in request.session.keys():
                 if request.session["username"]:
                     user = User.objects.filter(username=request.session["username"]).first()
-            return render(request, "edit_event.html", {"event": Event.objects.filter(id=event).first(),
-                                                       "user":user})
+            event = Event.objects.filter(id=event_id).first()
+            try:
+                users_list = json_dec.decode(event.users)
+            except:
+                users_list = []
+            return render(request, "edit_event.html", {"event": event,
+                                                       "user":user, "added_users":users_list})
         else:
             return redirect("/")
     elif request.method == "POST":

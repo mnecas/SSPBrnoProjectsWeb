@@ -75,6 +75,14 @@
                     </div>
 
                     <div class="row">
+                        <p>
+                            {% for user in added_users %}
+                                   {{ user }},
+                            {% endfor %}
+                        </p>
+
+                    </div>
+                    <div class="row">
                         <div class="file-field input-field">
                             <div class="btn">
                                 <span>Soubor</span>
@@ -143,5 +151,5 @@
 </body>
 <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
-
+<script type='text/javascript' src="{% static 'js/materialize.js' %}"></script>
 </html>
