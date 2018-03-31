@@ -37,6 +37,7 @@ urlpatterns = [
     path('edit_comment', views.edit_comment, name="edit_comment"),
     path('study_material_save', views.study_material_save, name="study_material_save"),
     path('study_mat', views.study_mat, name="study_mat"),
+    path('add_user_to_event', views.add_user, name="add_user"),
     path('remove_comment', views.remove_comment, name="remove_comment"),
     path('', views.index, name="index"),
 ]

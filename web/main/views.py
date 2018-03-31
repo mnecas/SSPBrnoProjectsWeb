@@ -4,7 +4,9 @@ from django.shortcuts import render, redirect
 from .models import Image, Event, User, Comment, Anketa, Study_material
 from django.db.models import Avg
 
+import json
 
+json_dec = json.JSONDecoder()
 # Create your views here.
 def index(request):
     user = None
@@ -286,3 +288,32 @@ def study_mat(request):
     elif request.method == "POST":
         redirect("/")
 
+
+def add_user(request):
+    if request.method == "GET":
+        event_id = request.GET.get("event_id", "")
+        user = None
+        if "username" in request.session.keys():
+            if request.session["username"]:
+                user = User.objects.filter(username=request.session["username"]).first()
+        event = Event.objects.filter(id=event_id).first()
+        try:
+            users_list = json_dec.decode(event.users)
+        except:
+            users_list = []
+
+        return render(request, "add_user.html", {"user": user, "event": event, "added_users":users_list})
+
+    elif request.method == "POST":
+        event_id = request.POST.get("event_id", "")
+        user_add = request.POST.get("user_add","")
+        event = Event.objects.filter(id=event_id)
+
+        try:
+            users_list = json_dec.decode(event.first().users)
+        except:
+            users_list = []
+        users_list.append(user_add)
+        users = json.dumps(users_list)
+        event.update(users=users)
+        return redirect("/info?event=" + str(event.first().id))
