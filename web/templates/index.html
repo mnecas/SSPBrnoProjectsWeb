@@ -125,10 +125,9 @@
 <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
 <script>
 function myFunction() {
-    var input, filter, ul, li, a, i;
+    var input, filter, li, a, i;
     input = document.getElementById("search");
     filter = input.value.toUpperCase();
-
     li = document.getElementsByClassName("search_div");
     for (i = 0; i < li.length; i++) {
         a = li[i].getElementsByClassName("card-title")[0];
@@ -136,7 +135,6 @@ function myFunction() {
             li[i].style.display = "";
         } else {
             li[i].style.display = "none";
-
         }
     }
 }
