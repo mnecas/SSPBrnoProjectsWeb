@@ -68,6 +68,11 @@ def create_event(request):
                 fs = FileSystemStorage(location="media/image/events/" + name)
                 fs.save(img.name, img)
                 Image(image="image/events/"+name+"/"+img.name, event=event).save()
+            files = request.FILES.getlist('files')
+            for file in files:
+                fs = FileSystemStorage(location="media/image/events/" + event.name)
+                fs.save(file.name, file)
+                Study_material.objects.create(event=event, path="media/image/events/" + event.name, name=file.name)
 
 
         return redirect("/")
