@@ -137,10 +137,10 @@ def info(request):
         if evet_id:
             event = Event.objects.filter(id=evet_id).first()
             commentable = False
-            if event.users != None:
-                if user.username in event.users:
-                    commentable = True
             if user:
+                if event.users != None:
+                    if user.username in event.users:
+                        commentable = True
                 if user.is_admin:
                     commentable = True
             ratings = Anketa.objects.filter(event=event)
@@ -293,11 +293,18 @@ def save_edit(request):
                 users_list.append(user_add)
         users = json.dumps(users_list)
         event.update(name=name, text=text, users=users)
+        files = request.FILES.getlist('files')
+        for file in files:
+            fs = FileSystemStorage(location="media/image/events/" + event.first().name)
+            fs.save(file.name, file)
+            Study_material.objects.create(event=event.first(), path="media/image/events/" + event.first().name, name=file.name)
+
         for img in images:
             image, created = Image.objects.get_or_create(image="image/events/"+name+"/"+img.name, event=event.first())
             if created:
                 fs = FileSystemStorage(location="media/image/events/" + name)
                 fs.save(img.name, img)
+
         return redirect("/")
     elif request.method == "GET":
         return redirect("/")
