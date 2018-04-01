@@ -83,9 +83,14 @@ def edit_event(request):
                 users_list = json_dec.decode(event.users)
             except:
                 users_list = []
+            all_users = list(User.objects.all())
+            for added_user in users_list:
+                for user_in_all_users in all_users:
+                    if added_user == user_in_all_users.username:
+                        all_users.remove(User.objects.filter(username=added_user).first())
             return render(request, "edit_event.html", {"event": event,
                                                        "user":user, "added_users":users_list,
-                                                       "all_users":User.objects.all()})
+                                                       "all_users":all_users})
         else:
             return redirect("/")
     elif request.method == "POST":
@@ -251,10 +256,23 @@ def save_edit(request):
         event_id = request.POST.get("event_id", "")
         text = request.POST.get("text", "")
         images = request.FILES.getlist('images')
+        users_opt = request.POST.getlist("users_opt")
         event = Event.objects.filter(id=event_id)
-        event.update(name=name, text=text)
+        try:
+            users_list = json_dec.decode(event.first().users)
+        except:
+            users_list = []
+        for user_add in users_opt:
+            is_added = True
+            for user_added in users_list:
+                if user_added == user_add:
+                    is_added = False
+            if is_added:
+                users_list.append(user_add)
+        users = json.dumps(users_list)
+        event.update(name=name, text=text, users=users)
         for img in images:
-            image, created = Image.objects.get_or_create(image=img, event=event.first())
+            image, created = Image.objects.get_or_create(image="image/events/"+name+"/"+img.name, event=event.first())
             if created:
                 fs = FileSystemStorage(location="media/image/events/" + name)
                 fs.save(img.name, img)
