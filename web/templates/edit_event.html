@@ -51,51 +51,43 @@
 <main>
     <div class="container">
         <div class="section">
-
-
             <div class="row">
                 <form class="col s12" method="POST" action="/save_edit" enctype="multipart/form-data" id="save_edit">
                     {% csrf_token %}
                     <input type="hidden" name="event_id" value="{{ event.id }}">
-                    <div class="row">
                         <div class="input-field">
                             <input name="title" id="first_name" type="text" value="{{ event.name }}" class="validate">
                             <label for="first_name">Name</label>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <textarea name="text" id="textarea2" class="materialize-textarea"
-                                          data-length="500">{{ event.text }}</textarea>
-                                <label for="textarea2">Text</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <p>
-                            {% for user in added_users %}
-                                   {{ user }},
-                            {% endfor %}
-                        </p>
-
                     </div>
 
                     <div class="row">
                         <div class="input-field col s12">
+                            <textarea name="text" id="textarea2" class="materialize-textarea"
+                                      data-length="500">{{ event.text }}</textarea>
+                            <label for="textarea2">Text</label>
+                        </div>
+                    </div>
+
+                        <span><h5>Přidaní uživatelé: </h5></span>
+
+                        <span>
+
+                            {% for user in added_users %}
+                                   {{ user }},
+                            {% endfor %}
+                        </span>
+                    <div class="row">
+
+                        <div class="input-field col s12">
                             <select multiple name="users_opt" form="save_edit">
-                              <option value="" disabled selected>Choose your option</option>
+                              <option value="" disabled selected>Přidat uživatele</option>
                                 {% for user in all_users %}
                                     <option value="{{user}}">{{user}}</option>
                                 {% endfor %}
                             </select>
-                            <label>Materialize Multiple Select</label>
                         </div>
                     </div>
 
-                    <div class="row">
                         <div class="file-field input-field">
                             <div class="btn">
                                 <span>Soubor</span>
@@ -105,7 +97,6 @@
                                 <input class="file-path validate" type="text">
                             </div>
                         </div>
-                    </div>
                     <button class="btn waves-effect waves-light" type="submit" name="action">Odeslat
                         <i class="material-icons right">send</i>
                     </button>
@@ -114,9 +105,7 @@
 
             </div>
 
-
             <div class="row">
-
                 <ul class="collection with-header">
                     {% for img in event.get_images %}
 
@@ -127,9 +116,9 @@
                         </li>
                     {% endfor %}
                 </ul>
-
-
             </div>
+
+
         </div>
     </div>
 </main>

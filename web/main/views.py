@@ -49,19 +49,26 @@ def register(request):
 
 def create_event(request):
     if request.method == "GET":
-        return render(request, "create_event.html")
+        all_users = list(User.objects.all())
+        return render(request, "create_event.html" , {"all_users":all_users})
     elif request.method == "POST":
         username = request.session["username"]
         name = request.POST.get("title", "")
         text = request.POST.get("text", "")
         images = request.FILES.getlist('images')
         if name and text:
-            event = Event(name=name, text=text, creator=User.objects.filter(username=username).first())
+            users_opt = request.POST.getlist("users_opt")
+            users_list = []
+            for user_add in users_opt:
+                users_list.append(user_add)
+            users = json.dumps(users_list)
+            event = Event(name=name, text=text, users=users, creator=User.objects.filter(username=username).first())
             event.save()
             for img in images:
                 fs = FileSystemStorage(location="media/image/events/" + name)
                 fs.save(img.name, img)
                 Image(image="image/events/"+name+"/"+img.name, event=event).save()
+
 
         return redirect("/")
 
@@ -315,18 +322,7 @@ def study_mat(request):
 
 def add_user(request):
     if request.method == "GET":
-        event_id = request.GET.get("event_id", "")
-        user = None
-        if "username" in request.session.keys():
-            if request.session["username"]:
-                user = User.objects.filter(username=request.session["username"]).first()
-        event = Event.objects.filter(id=event_id).first()
-        try:
-            users_list = json_dec.decode(event.users)
-        except:
-            users_list = []
-
-        return render(request, "add_user.html", {"user": user, "event": event, "added_users":users_list})
+        return redirect("/")
 
     elif request.method == "POST":
         event_id = request.POST.get("event_id", "")
