@@ -62,22 +62,34 @@
             {% load poll_extras %}
             {% if user.id|rated:event.id or not user %}
                 <div>
-                    {{ average_rating }}<span>☆</span>
+                    <h4>{{ average_rating }}<span>☆</span></h4>
                 </div>
             {% else %}
                 <div>
+                    <h4>
                     <a href="/rate?value=1&user_id={{ user.id }}&event_id={{ event.id }}">☆</a>
                     <a href="/rate?value=2&user_id={{ user.id }}&event_id={{ event.id }}">☆</a>
                     <a href="/rate?value=3&user_id={{ user.id }}&event_id={{ event.id }}">☆</a>
                     <a href="/rate?value=4&user_id={{ user.id }}&event_id={{ event.id }}">☆</a>
                     <a href="/rate?value=5&user_id={{ user.id }}&event_id={{ event.id }}">☆</a>
+                    </h4>
                 </div>
 
             {% endif %}
+
+                <ul >
+                    {% for mat in study_material %}
+                        <li>
+                            <a href="{{ mat.path }}/{{ mat.name }}">{{ mat.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                {% if user.is_admin %}
                 <div>
-                    <a href="study_mat?event_id={{ event.id }}"><h5>Přejít na Studíjní Materiály</h5></a>
+                     <a href="study_mat?event_id={{ event.id }}" class="waves-effect waves-light btn"><h6>Přidat Studíjní Materiály</h6>
+                         <i class="material-icons right">attach_file</i></a>
                 </div>
-            <br>
+                {% endif %}
             <br>
             <div class="row">
 
