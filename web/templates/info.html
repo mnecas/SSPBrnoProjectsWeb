@@ -82,7 +82,7 @@
             <div class="row">
 
                 <h4>Komentáře</h4>
-                {% if user %}
+                {% if can_comment %}
                     <form action="/info" method="post" class="col s12">
                         {% csrf_token %}
                         <input type="hidden" name="event_id" value="{{ event.id }}">

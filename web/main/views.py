@@ -133,19 +133,26 @@ def info(request):
         if "username" in request.session.keys():
             if request.session["username"]:
                 user = User.objects.filter(username=request.session["username"]).first()
+
         if evet_id:
             event = Event.objects.filter(id=evet_id).first()
+            commentable = False
+            if event.users != None:
+                if user.username in event.users:
+                    commentable = True
             ratings = Anketa.objects.filter(event=event)
             if len(ratings)>0:
                return render(request, "info.html", {"event": event,
                                                  "user": user,
                                                  "average_rating": "%.2f"%ratings.aggregate(Avg('points'))["points__avg"],
-                                                 "study_material": event.get_study_mat()})
+                                                 "study_material": event.get_study_mat(),
+                                                    "can_comment":commentable})
 
             return render(request, "info.html", {"event": event,
                                                  "user": user,
                                                  "average_rating": "none",
-                                                 "study_material": event.get_study_mat()})
+                                                 "study_material": event.get_study_mat(),
+                                                 "can_comment": commentable})
         return redirect("/")
     elif request.method == "POST":
         if "username" in request.session.keys():
