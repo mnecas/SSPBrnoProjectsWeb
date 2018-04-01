@@ -140,6 +140,8 @@ def info(request):
             if event.users != None:
                 if user.username in event.users:
                     commentable = True
+            elif user.is_admin:
+                commentable = True
             ratings = Anketa.objects.filter(event=event)
             if len(ratings)>0:
                return render(request, "info.html", {"event": event,
