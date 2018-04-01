@@ -23,7 +23,7 @@
             </li>
             <li class="search">
                 <div class="search-wrapper white-text">
-                    <input id="search" placeholder="Vyhledat">
+                    <input id="search" onkeyup="myFunction()" placeholder="Vyhledat">
                     <div class="search-results"></div>
                 </div>
             </li>
@@ -61,6 +61,7 @@
 
             <div class="row">
                 {% for event in events %}
+                <div class="search_div">
                 <a href="info?event={{ event.id }}" style="color:black">
                     <div class="col s12 m4">
                         <div class="card">
@@ -86,6 +87,7 @@
                         </div>
                     </div>
                     </a>
+                    </div>
                 {% endfor %}
 
             </div>
@@ -121,5 +123,22 @@
 </body>
 <script type="text/javascript" src="{% static 'js/script.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+<script>
+function myFunction() {
+    var input, filter, ul, li, a, i;
+    input = document.getElementById("search");
+    filter = input.value.toUpperCase();
 
+    li = document.getElementsByClassName("search_div");
+    for (i = 0; i < li.length; i++) {
+        a = li[i].getElementsByClassName("card-title")[0];
+        if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+
+        }
+    }
+}
+</script>
 </html>
