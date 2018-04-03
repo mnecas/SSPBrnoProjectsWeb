@@ -11,7 +11,7 @@ class User(models.Model):
     icon = models.ImageField(default="image/user_default/user.png")
     is_admin = models.BooleanField(default=True)
     #narodnost
-    #sex
+    #sex ano
 
     def right_user(self, username, password):
         if username == self.username and self.password == password:
