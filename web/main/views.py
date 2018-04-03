@@ -101,7 +101,7 @@ def edit_event(request):
                     if added_user == user_in_all_users.username:
                         all_users.remove(User.objects.filter(username=added_user).first())
             return render(request, "edit_event.html", {"event": event,
-                                                       "user":user, "added_users":users_list,
+                                                       "user":user, "added_users":",".join(users_list),
                                                        "all_users":all_users})
         else:
             return redirect("/")
@@ -239,7 +239,7 @@ def user_settings(request):
             fs.save(image.name, image)
             user.update(icon=image)
         except:
-            # USER HAVNT CHANGE ICON
+            # USER HAVN'T CHANGE ICON
             pass
         password = request.POST.get("pass1", "")
         password2 = request.POST.get("pass2", "")
