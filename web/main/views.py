@@ -101,7 +101,7 @@ def edit_event(request):
                     if added_user == user_in_all_users.username:
                         all_users.remove(User.objects.filter(username=added_user).first())
             return render(request, "edit_event.html", {"event": event,
-                                                       "user":user, "added_users":",".join(users_list),
+                                                       "user":user, "added_users":", ".join(users_list),
                                                        "all_users":all_users})
         else:
             return redirect("/")
@@ -136,13 +136,15 @@ def info(request):
 
         if evet_id:
             event = Event.objects.filter(id=evet_id).first()
+
             commentable = False
             if user:
-                if event.users != None:
+                if event.users:
                     if user.username in event.users:
                         commentable = True
                 if user.is_admin:
                     commentable = True
+
             ratings = Anketa.objects.filter(event=event)
             if len(ratings)>0:
                return render(request, "info.html", {"event": event,
