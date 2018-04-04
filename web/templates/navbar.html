@@ -5,15 +5,6 @@
         <a id="logo-container" href="/" class="brand-logo hide-on-med-and-down">Projekty
             SSPBrno</a>
         <ul class="right hide-on-med-and-down">
-            <li>
-                <i class="material-icons white-text">search</i>
-            </li>
-            <li class="search">
-                <div class="search-wrapper white-text">
-                    <input id="search" onkeyup="myFunction()" placeholder="Vyhledat">
-                    <div class="search-results"></div>
-                </div>
-            </li>
             {% if user %}
                 <li><a href="/user_settings">
                     <img src="media/{{ user.icon }}" width="40px" height="50px" class="circle responsive-img custom4">
