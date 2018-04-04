@@ -8,7 +8,7 @@ class User(models.Model):
     username = models.CharField(max_length=30, default="")
     password = models.CharField(max_length=300, default="")
     email = models.EmailField(default="")
-    icon = models.ImageField(default="image/user_default/user.png")
+    icon = models.CharField(max_length=300, default="image/user_default/user.png")
     is_admin = models.BooleanField(default=True)
     #narodnost
     #sex ano

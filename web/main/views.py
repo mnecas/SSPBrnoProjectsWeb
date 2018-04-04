@@ -239,7 +239,7 @@ def user_settings(request):
             user = User.objects.filter(username=request.session["username"])
             fs = FileSystemStorage(location="media/image/users")
             fs.save(image.name, image)
-            user.update(icon=image)
+            user.update(icon="image/users/"+image.name)
         except:
             # USER HAVN'T CHANGE ICON
             pass
