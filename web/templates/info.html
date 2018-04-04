@@ -14,31 +14,7 @@
 </head>
 <body>
 
-<nav class="custom2" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="/" class="brand-logo hide-on-med-and-down">Projekty
-        SSPBrno</a>
-        <ul class="right hide-on-med-and-down">
-            {% if user %}
-                <li><a href="/user_settings">
-                    {% if user.icon %}
-                        <img src="media/{{ user.icon }}" width="40px" height="50px" class="circle responsive-img custom4">
-                        <!-- notice the "circle" class -->
-                    {% else %}
-                        <img height="50px" width="40px" src="https://i.stack.imgur.com/dr5qp.jpg"
-                             class="circle responsive-img custom4">
-                        <!-- notice the "circle" class -->
-                    {% endif %}
-                    <span class="black-text">{{ user.username }}</span>
-                </a>
-                </li>
-                <li><a href="/user_logout">Odhlásit se</a></li>
-            {% else %}
-                <li><a href="/login">Přihlásit se</a></li>
-                <li><a href="/register">Zaregistrovat se</a></li>
-            {% endif %}
-        </ul>
-    </div>
-</nav>
+{% include "navbar.html" %}
 
 <main>
     <div class="container">
@@ -143,30 +119,7 @@
     </div>
 </main>
 
-<footer class="page-footer custom3">
-    <div class="container">
-        <div class="row">
-            <div class="col l6 s12">
-                <h5 class="white-text">Projekty SSPBrno</h5>
-                <p class="grey-text text-lighten-4">Stránka pro projekty SPPBrno.</p>
-            </div>
-            <div class="col 12 offset-s4">
-                <h5 class="white-text">Užitečné odkazy</h5>
-                <ul>
-                    <li><a class="white-text" href="http://www.sspbrno.cz/">SSPBrno</a></li>
-                    <li><a class="white-text" href="#!">Link 2</a></li>
-                    <li><a class="white-text" href="#!">Link 3</a></li>
-                    <li><a class="white-text" href="#!">Link 4</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="footer-copyright">
-        <div class="container">
-            Made by <a class="orange-text text-lighten-3" href="#">Porni</a>
-        </div>
-    </div>
-</footer>
+{% include "footer.html" %}
 
 </body>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
