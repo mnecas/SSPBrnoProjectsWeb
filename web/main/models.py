@@ -65,7 +65,7 @@ class Anketa(models.Model):
                                      MinValueValidator(1)
                                  ])
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
-    question = models.CharField(default="", max_length=100)
+    #question = models.CharField(default="", max_length=100)
 
 class Study_material(models.Model):
     name = models.CharField(max_length=300)

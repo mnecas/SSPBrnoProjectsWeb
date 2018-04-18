@@ -50,7 +50,11 @@ def register(request):
 def create_event(request):
     if request.method == "GET":
         all_users = list(User.objects.all())
-        return render(request, "create_event.html" , {"all_users":all_users})
+        user = None
+        if "username" in request.session.keys():
+            if request.session["username"]:
+                user = User.objects.filter(username=request.session["username"]).first()
+        return render(request, "create_event.html" , {"all_users":all_users,"user": user})
     elif request.method == "POST":
         username = request.session["username"]
         name = request.POST.get("title", "")
