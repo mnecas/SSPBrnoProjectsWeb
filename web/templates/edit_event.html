@@ -34,6 +34,12 @@
                                       data-length="500">{{ event.text }}</textarea>
                             <label for="textarea2">Text</label>
                         </div>
+
+                    <div class="input-field col s12">
+                                Začátek projetku: <input type="text" id="datepicker1" name="time1" value="{{ event.date_from }}" class="datepicker">
+                                Konec projetku: <input type="text" name="time2" value="{{ event.date_to }}" class="datepicker">
+                    </div>
+
                     </div>
 
                         <span><h5>Přidaní uživatelé: </h5></span>
@@ -107,5 +113,74 @@
     $(document).ready(function(){
     $('select').formSelect();
   });
+   $(document).ready(function(){
+    $('.datepicker').datepicker({i18n: {
+       months:
+            [
+              'Leden',
+              'Únor',
+              'Březen',
+              'Duben',
+              'Květen',
+              'Červen',
+              'Červenec',
+              'Srpen',
+              'Září',
+              'Říjen',
+              'Listopad',
+              'Prosinec'
+            ],
+       monthsShort:
+            ['Led',
+              'Úno',
+              'Bře',
+              'Dub',
+              'Kvě',
+              'Črv',
+              'Črn',
+              'Srp',
+              'Zář',
+              'Říj',
+              'Lis',
+              'Pro'],
+
+        weekdays:
+            [
+              'Neděle',
+              'Pondělí',
+              'Úterý',
+              'Středa',
+              'Čtvrtek',
+              'Pátek',
+              'Sobota'
+            ],
+        weekdaysShort:
+            [
+              'Ne',
+              'Po',
+              'Út',
+              'St',
+              'Čt',
+              'Pá',
+              'So'
+            ],
+        weekdaysAbbrev:
+            [
+              'Ne',
+              'Po',
+              'Út',
+              'St',
+              'Čt',
+              'Pá',
+              'So'
+            ],
+         cancel: 'Zrušit'
+       }}
+
+    )
+  });
+
+
+
 </script>
 </html>

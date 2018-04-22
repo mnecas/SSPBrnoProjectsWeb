@@ -285,6 +285,8 @@ def save_edit(request):
         name = request.POST.get("title", "")
         event_id = request.POST.get("event_id", "")
         text = request.POST.get("text", "")
+        date_from = request.POST.get("time1", "")
+        date_to = request.POST.get("time2", "")
         images = request.FILES.getlist('images')
         users_opt = request.POST.getlist("users_opt")
         event = Event.objects.filter(id=event_id)
@@ -300,7 +302,7 @@ def save_edit(request):
             if is_added:
                 users_list.append(user_add)
         users = json.dumps(users_list)
-        event.update(name=name, text=text, users=users)
+        event.update(name=name, text=text, users=users, date_from=date_from, date_to=date_to)
         files = request.FILES.getlist('files')
         for file in files:
             fs = FileSystemStorage(location="media/image/events/" + event.first().name)
