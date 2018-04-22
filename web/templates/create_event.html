@@ -43,6 +43,12 @@
                                           data-length="500"></textarea>
                                 <label for="textarea2">Text</label>
                             </div>
+
+                            <div class="input-field col s12">
+                                Začátek projetku: <input type="text" name="time1" value="Datum začátku projektu" class="datepicker">
+                                Konec projetku: <input type="text" name="time2" value="Datum konce projektu" class="datepicker">
+                            </div>
+
                             <div class="input-field col s12">
                             <select multiple name="users_opt" form="save_edit">
                               <option value="" disabled selected>Přidat uživatele</option>
@@ -97,6 +103,74 @@
 <script>
     $(document).ready(function(){
     $('select').formSelect();
+  });
+
+
+    $(document).ready(function(){
+    $('.datepicker').datepicker({i18n: {
+       months:
+            [
+              'Leden',
+              'Únor',
+              'Březen',
+              'Duben',
+              'Květen',
+              'Červen',
+              'Červenec',
+              'Srpen',
+              'Září',
+              'Říjen',
+              'Listopad',
+              'Prosinec'
+            ],
+       monthsShort:
+            ['Led',
+              'Úno',
+              'Bře',
+              'Dub',
+              'Kvě',
+              'Črv',
+              'Črn',
+              'Srp',
+              'Zář',
+              'Říj',
+              'Lis',
+              'Pro'],
+
+        weekdays:
+            [
+              'Neděle',
+              'Pondělí',
+              'Úterý',
+              'Středa',
+              'Čtvrtek',
+              'Pátek',
+              'Sobota'
+            ],
+        weekdaysShort:
+            [
+              'Ne',
+              'Po',
+              'Út',
+              'St',
+              'Čt',
+              'Pá',
+              'So'
+            ],
+        weekdaysAbbrev:
+            [
+              'Ne',
+              'Po',
+              'Út',
+              'St',
+              'Čt',
+              'Pá',
+              'So'
+            ],
+         cancel: 'Zrušit'
+       }}
+
+    )
   });
 </script>
 </html>

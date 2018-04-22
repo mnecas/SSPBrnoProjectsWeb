@@ -24,6 +24,17 @@
             <div class="col s12">
                 {{ event.text }}
             </div>
+            {% if event.date_from and event.date_from != "Datum začátku projektu" %}
+            <div class="col s12">
+                Datum začátku: {{ event.date_from }}
+            </div>
+            {% endif %}
+
+            {% if event.date_to and event.date_to != "Datum konce projektu" %}
+            <div class="col s12">
+                Datum konce: {{ event.date_to }}
+            </div>
+            {% endif %}
             <br>
             
             <div class="slider">

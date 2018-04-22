@@ -59,6 +59,8 @@ def create_event(request):
         username = request.session["username"]
         name = request.POST.get("title", "")
         text = request.POST.get("text", "")
+        date_from = request.POST.get("time1", "")
+        date_to = request.POST.get("time2", "")
         images = request.FILES.getlist('images')
         if name and text:
             users_opt = request.POST.getlist("users_opt")
@@ -66,7 +68,7 @@ def create_event(request):
             for user_add in users_opt:
                 users_list.append(user_add)
             users = json.dumps(users_list)
-            event = Event(name=name, text=text, users=users, creator=User.objects.filter(username=username).first())
+            event = Event(name=name, text=text, users=users, date_to=date_to, date_from=date_from, creator=User.objects.filter(username=username).first())
             event.save()
             for img in images:
                 fs = FileSystemStorage(location="media/image/events/" + name)

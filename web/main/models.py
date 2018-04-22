@@ -32,6 +32,8 @@ class Event(models.Model):
     text = models.TextField(max_length=3000, default="")
     creator = models.ForeignKey(User, on_delete=models.CASCADE, null=True, default=None)
     users = models.TextField(null=True)
+    date_from = models.CharField(default="", max_length=100)
+    date_to = models.CharField(default="", max_length=100)
 
     def get_images(self):
         return Image.objects.filter(event=self)
