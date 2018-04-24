@@ -1,10 +1,10 @@
 
 {% block navbar %}
-<nav class="custom2" role="navigation">
+<nav class="custom2 hide-on-med-and-down" role="navigation">
     <div class="nav-wrapper container">
-        <a id="logo-container" href="/" class="brand-logo hide-on-med-and-down">Projekty
+        <a id="logo-container" href="/" class="brand-logo">Projekty
             SSPBrno</a>
-        <ul class="right hide-on-med-and-down">
+        <ul class="right">
             {% if user %}
                 <li><a href="/user_settings">
                     <img src="media/{{ user.icon }}" width="40px" height="50px" class="circle responsive-img custom4">
@@ -19,4 +19,23 @@
         </ul>
     </div>
 </nav>
+<nav class="custom2 show-on-med-and-down">
+    <div class="nav-wrapper">
+      <a href="/" class="brand-logo">Projekty SSPBrno</a>
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+  <ul class="sidenav" id="mobile-demo">
+            {% if user %}
+                <li><a href="/user_settings">
+                    <img src="media/{{ user.icon }}" width="40px" height="50px" class="circle responsive-img custom4">
+                    <span>{{ user.username }}</span>
+                </a>
+                </li>
+                <li><a href="/user_logout">Odhlásit se</a></li>
+            {% else %}
+                <li><a href="/login">Přihlásit se</a></li>
+                <li><a href="/register">Zaregistrovat se</a></li>
+            {% endif %}
+  </ul>
 {% endblock %}
