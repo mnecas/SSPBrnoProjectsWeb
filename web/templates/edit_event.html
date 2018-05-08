@@ -23,6 +23,7 @@
                 <form class="col s12" method="POST" action="/save_edit" enctype="multipart/form-data" id="save_edit">
                     {% csrf_token %}
                     <input type="hidden" name="event_id" value="{{ event.id }}">
+                    <input type="hidden" name="new_users" id="new_users">
                         <div class="input-field">
                             <input name="title" id="first_name" type="text" value="{{ event.name }}" class="validate">
                             <label for="first_name">Name</label>
@@ -43,19 +44,17 @@
                     </div>
 
                         <span><h5>Přidaní uživatelé: </h5></span>
+                    <p id="new_added_users"></p>
 
-                        <span>
-                               {{ added_users }}
-                        </span>
+
                     <div class="row">
-
-                        <div class="input-field col s12">
-                            <select multiple name="users_opt" form="save_edit">
-                              <option value="" disabled selected>Přidat uživatele</option>
-                                {% for user in all_users %}
-                                    <option value="{{user}}">{{user}}</option>
-                                {% endfor %}
-                            </select>
+                        <div class="col s12">
+                            <div class="row">
+                                <div class="input-field col s12">
+                                  <input type="text" id="autocomplete-input" class="autocomplete">
+                                  <label for="autocomplete-input">Vyhledat a přidat uživatele</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                         <div class="file-field input-field">
@@ -180,7 +179,58 @@
     )
   });
 
+//nekde tu je problem, spatne odstranovani useru, chyba v pridavani vice useru
+var added = "{{ added_users }}".split(", ");
+var all_users = "{{ all_users_js|safe }}";
+all_users = all_users.replace("[","").replace("]","").split("'").join("").split(" ").join("").split(",");
+
+console.log(all_users);
+console.log(added);
+for(i = 0; i < all_users.length; i++){
+    for(j = 0; j < added.length; j++){
+        if(all_users[i] == added[j]){
+            all_users.splice(i,1);
+        }
+    }
+}
+console.log(all_users);
 
 
+str_all_users = all_users.slice();
+str_all_users.forEach(function(element, i) {
+  str_all_users[i]='"'+element+'": null';
+});
+
+str_all_users = "{ "+str_all_users.join(",")+"}";
+var new_users = added;
+
+function autocomp(){
+document.getElementById("new_added_users").innerHTML=new_users.join(", ");
+ $(document).ready(function(){
+    $('input.autocomplete').autocomplete({
+      data: JSON.parse(str_all_users),
+      onAutocomplete: function(user){
+        new_users.push(user);
+        document.getElementById("new_added_users").innerHTML=new_users.join(", ");
+        document.getElementById("autocomplete-input").value = "";
+        document.getElementById("new_users").value = new_users;
+        for(i = 0; i < all_users.length; i++){
+            if(all_users[i] == user){
+                all_users.splice(i,1);
+
+            }
+        }
+        str_all_users = all_users.slice();
+        str_all_users.forEach(function(element, i) {
+          str_all_users[i]='"'+element+'": null';
+        });
+
+        str_all_users = "{ "+str_all_users.join(",")+"}";
+        autocomp();
+      }
+    });
+  });
+ }
+ autocomp();
 </script>
 </html>

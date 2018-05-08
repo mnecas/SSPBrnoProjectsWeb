@@ -99,16 +99,23 @@ def edit_event(request):
             event = Event.objects.filter(id=event_id).first()
             try:
                 users_list = json_dec.decode(event.users)
+                print(users_list)
+
             except:
                 users_list = []
             all_users = list(User.objects.all())
+            js_list=[]
+            for user1 in all_users:
+                js_list.append(user1.username)
             for added_user in users_list:
                 for user_in_all_users in all_users:
                     if added_user == user_in_all_users.username:
                         all_users.remove(User.objects.filter(username=added_user).first())
+            print(users_list)
             return render(request, "edit_event.html", {"event": event,
                                                        "user":user, "added_users":", ".join(users_list),
-                                                       "all_users":all_users})
+                                                       "all_users":all_users,
+                                                       "all_users_js": js_list})
         else:
             return redirect("/")
     elif request.method == "POST":
@@ -287,14 +294,15 @@ def save_edit(request):
         text = request.POST.get("text", "")
         date_from = request.POST.get("time1", "")
         date_to = request.POST.get("time2", "")
+        new_users = request.POST.get("new_users", "")
+        new_users = new_users.split(",")
         images = request.FILES.getlist('images')
-        users_opt = request.POST.getlist("users_opt")
         event = Event.objects.filter(id=event_id)
         try:
             users_list = json_dec.decode(event.first().users)
         except:
             users_list = []
-        for user_add in users_opt:
+        for user_add in new_users:
             is_added = True
             for user_added in users_list:
                 if user_added == user_add:
@@ -314,6 +322,7 @@ def save_edit(request):
             if created:
                 fs = FileSystemStorage(location="media/image/events/" + name)
                 fs.save(img.name, img)
+
 
         return redirect("/")
     elif request.method == "GET":
