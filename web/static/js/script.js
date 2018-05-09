@@ -2,8 +2,8 @@ $(document).ready(function(){
    $('.sidenav').sidenav();
 });
 
-$(document).ready(function(){
-  $('.sidenav').sidenav();
+$( document ).ready(function(){
+    $(".sidenav-trigger").sideNav();
 });
 
 $(document).ready(function () {

@@ -1,7 +1,7 @@
 
 {% block navbar %}
-<nav class="custom2 hide-on-med-and-down" role="navigation">
-    <div class="nav-wrapper container">
+<nav class="custom2" role="navigation">
+    <div class="nav-wrapper container hide-on-med-and-down">
         <a id="logo-container" href="/" class="brand-logo">Projekty
             SSPBrno</a>
         <ul class="right">
@@ -18,20 +18,23 @@
             {% endif %}
         </ul>
     </div>
-</nav>
-<!-- bad code here :) TY wudiam
-<nav class="custom2 show-on-med-and-down">
-    <div class="nav-wrapper">
+
+    <div class="nav-wrapper show-on-med-and-down">
       <a href="/" class="brand-logo">Projekty SSPBrno</a>
-      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      <a href="#" data-target="mobile-demo" class="sidenav-trigger">
+      	<i class="material-icons">menu</i></a>
     </div>
   </nav>
+
   <ul class="sidenav" id="mobile-demo">
+  	<li>
+  		<h4 style="text-align: center;">Projekty SSPBrno</h4>
+  	</li>
             {% if user %}
                 <li><a href="/user_settings">
                     <img src="media/{{ user.icon }}" width="40px" height="50px" class="circle responsive-img custom4">
                     <span>{{ user.username }}</span>
-                </a>
+                	</a>
                 </li>
                 <li><a href="/user_logout">Odhlásit se</a></li>
             {% else %}
@@ -39,5 +42,4 @@
                 <li><a href="/register">Zaregistrovat se</a></li>
             {% endif %}
   </ul>
-  -->
 {% endblock %}
