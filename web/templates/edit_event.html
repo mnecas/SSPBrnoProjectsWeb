@@ -179,13 +179,10 @@
     )
   });
 
-//nekde tu je problem, spatne odstranovani useru, chyba v pridavani vice useru
 var added = "{{ added_users }}".split(", ");
 var all_users = "{{ all_users_js|safe }}";
 all_users = all_users.replace("[","").replace("]","").split("'").join("").split(" ").join("").split(",");
 
-console.log(all_users);
-console.log(added);
 for(i = 0; i < all_users.length; i++){
     for(j = 0; j < added.length; j++){
         if(all_users[i] == added[j]){
@@ -193,7 +190,6 @@ for(i = 0; i < all_users.length; i++){
         }
     }
 }
-console.log(all_users);
 
 
 str_all_users = all_users.slice();

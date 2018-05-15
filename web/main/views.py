@@ -49,12 +49,26 @@ def register(request):
 
 def create_event(request):
     if request.method == "GET":
+        try:
+            users_list = json_dec.decode(event.users)
+            print(users_list)
+
+        except:
+            users_list = []
         all_users = list(User.objects.all())
+        js_list = []
+        for user1 in all_users:
+            js_list.append(user1.username)
+        for added_user in users_list:
+            for user_in_all_users in all_users:
+                if added_user == user_in_all_users.username:
+                    all_users.remove(User.objects.filter(username=added_user).first())
         user = None
         if "username" in request.session.keys():
             if request.session["username"]:
                 user = User.objects.filter(username=request.session["username"]).first()
-        return render(request, "create_event.html" , {"all_users":all_users,"user": user})
+        return render(request, "create_event.html" , {"all_users":all_users,"user": user,
+                                                       "all_users_js": js_list, "added_users":", ".join(users_list)})
     elif request.method == "POST":
         username = request.session["username"]
         name = request.POST.get("title", "")
@@ -111,7 +125,6 @@ def edit_event(request):
                 for user_in_all_users in all_users:
                     if added_user == user_in_all_users.username:
                         all_users.remove(User.objects.filter(username=added_user).first())
-            print(users_list)
             return render(request, "edit_event.html", {"event": event,
                                                        "user":user, "added_users":", ".join(users_list),
                                                        "all_users":all_users,
