@@ -1,10 +1,10 @@
 $(document).ready(function(){
    $('.sidenav').sidenav();
 });
-
-$( document ).ready(function(){
-    $(".sidenav-trigger").sideNav();
-});
+//tohle nevim na co je, haze to chybu v konzoli -  TONDA
+//$( document ).ready(function(){
+//    $(".sidenav-trigger").sideNav();
+//});
 
 $(document).ready(function () {
     $('input#input_text, textarea#textarea2').characterCounter();
