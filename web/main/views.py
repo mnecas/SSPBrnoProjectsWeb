@@ -391,3 +391,12 @@ def add_user(request):
         users = json.dumps(users_list)
         event.update(users=users)
         return redirect("/info?event=" + str(event.first().id))
+
+
+def team(request):
+    if request.method == "GET":
+        user = None
+        if "username" in request.session.keys():
+            if request.session["username"]:
+                user = User.objects.filter(username=request.session["username"]).first()
+        return render(request, "team.html",{"user": user})
