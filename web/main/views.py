@@ -98,9 +98,6 @@ def create_event(request):
         return redirect("/")
 
 
-def add_event(request):
-    return redirect("/")
-
 
 def edit_event(request):
     if request.method == "GET":
