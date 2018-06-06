@@ -182,15 +182,12 @@
 var added = "{{ added_users }}".split(", ");
 var all_users = "{{ all_users_js|safe }}";
 all_users = all_users.replace("[","").replace("]","").split("'").join("").split(" ").join("").split(",");
-
-for(i = 0; i < all_users.length; i++){
-    for(j = 0; j < added.length; j++){
-        if(all_users[i] == added[j]){
-            all_users.splice(i,1);
-        }
+for(i = 0; i < added.length; i++){
+    if(all_users.includes(added[i])){
+        index = all_users.indexOf(added[i])
+        all_users.splice(index,1);
     }
 }
-
 
 str_all_users = all_users.slice();
 str_all_users.forEach(function(element, i) {
