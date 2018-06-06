@@ -49,12 +49,7 @@ def register(request):
 
 def create_event(request):
     if request.method == "GET":
-        try:
-            users_list = json_dec.decode(event.users)
-            print(users_list)
-
-        except:
-            users_list = []
+        users_list = []
         all_users = list(User.objects.all())
         js_list = []
         for user1 in all_users:
@@ -76,10 +71,11 @@ def create_event(request):
         date_from = request.POST.get("time1", "")
         date_to = request.POST.get("time2", "")
         images = request.FILES.getlist('images')
+        new_users = request.POST.get("new_users", "")
+        new_users = new_users.split(",")
         if name and text:
-            users_opt = request.POST.getlist("users_opt")
             users_list = []
-            for user_add in users_opt:
+            for user_add in new_users:
                 users_list.append(user_add)
             users = json.dumps(users_list)
             event = Event(name=name, text=text, users=users, date_to=date_to, date_from=date_from, creator=User.objects.filter(username=username).first())

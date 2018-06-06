@@ -28,6 +28,7 @@
 
             <div class="row">
                 <form class="col s12" method="POST" action="/create_event" enctype="multipart/form-data" id="save_edit">
+                    <input type="hidden" name="new_users" id="new_users">
                     {% csrf_token %}
                     <div class="row">
                         <div class="input-field">
@@ -179,7 +180,7 @@
     )
   });
 
-var added = "{{ added_users }}".split(", ");
+var added = [];
 var all_users = "{{ all_users_js|safe }}";
 all_users = all_users.replace("[","").replace("]","").split("'").join("").split(" ").join("").split(",");
 
@@ -209,6 +210,7 @@ document.getElementById("new_added_users").innerHTML=new_users.join(", ");
         new_users.push(user);
         document.getElementById("new_added_users").innerHTML=new_users.join(", ");
         document.getElementById("autocomplete-input").value = "";
+        console.log(new_users)
         document.getElementById("new_users").value = new_users;
         for(i = 0; i < all_users.length; i++){
             if(all_users[i] == user){
