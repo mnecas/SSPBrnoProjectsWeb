@@ -121,6 +121,15 @@ body {
     vertical-align: middle;
 }
 
+.card-style.hlavnititle {
+    color: white;
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;  
+}
+
 body {
     display: flex;
     min-height: 100vh;
