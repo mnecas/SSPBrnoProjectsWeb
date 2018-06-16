@@ -35,7 +35,7 @@
                         <div class="card">
                             <div class="card-image">
                                 <img src="media/{{ event.get_images.first.image }}" height="400">
-                                <span class="card-title" style="color: white; text-shadow: #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px; -webkit-font-smoothing: antialiased;">{{ event.name }}</span>
+                                <span class="card-title" style="overflow: hidden; height: 100px;color: white; text-shadow: #000 0px 0px 1px,   #000 0px 0px 1px,   #000 0px 0px 1px; -webkit-font-smoothing: antialiased;">{{ event.name }}</span>
                                 {% if user.is_admin %}
                                     <a class="btn-floating halfway-fab waves-effect waves-light red"
                                        style="margin-right: 50px" href="edit_event?event={{ event.id }}">
@@ -45,7 +45,7 @@
                                         <i class="material-icons">delete</i></a>
                                 {% endif %}
                             </div>
-                            <div class="card-content" style="overflow: hidden; height: 68px;>
+                            <div class="card-content" style="overflow: hidden; height: 68px;">
                                 <p>{{ event.text }}</p>
                             </div>
 
