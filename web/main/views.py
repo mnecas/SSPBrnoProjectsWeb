@@ -1,7 +1,7 @@
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
 
-from .models import Image, Event, User, Comment, Anketa, Study_material
+from .models import Image, Event, User, Comment, Anketa, Study_material, Survey
 from django.db.models import Avg
 
 import json
@@ -73,10 +73,8 @@ def create_event(request):
         images = request.FILES.getlist('images')
         new_users = request.POST.get("new_users", "")
         new_users = new_users.split(",")
-
         surveys = request.POST.get("surveys", "")
-        print(json.loads(surveys))
-
+        surveys = json.loads(surveys)
         if name and text:
             users_list = []
             for user_add in new_users:
@@ -94,7 +92,10 @@ def create_event(request):
                 fs = FileSystemStorage(location="media/image/events/" + event.name)
                 fs.save(file.name, file)
                 Study_material.objects.create(event=event, path="media/image/events/" + event.name, name=file.name)
-
+            for question in surveys.keys():
+                answers = surveys[question]
+                survey = Survey(event=event, question=question, answers=json.dumps(answers))
+                survey.save()
 
         return redirect("/")
 
@@ -308,6 +309,9 @@ def save_edit(request):
         new_users = new_users.split(",")
         images = request.FILES.getlist('images')
         event = Event.objects.filter(id=event_id)
+        surveys = request.POST.get("surveys", "")
+        surveys = json.loads(surveys)
+
         try:
             users_list = json_dec.decode(event.first().users)
         except:
@@ -333,6 +337,14 @@ def save_edit(request):
                 fs = FileSystemStorage(location="media/image/events/" + name)
                 fs.save(img.name, img)
 
+        for question in surveys.keys():
+            answers = surveys[question]
+            survey = Survey.objects.filter(question=question)
+            if survey:
+                survey.update(question=question, answers=json.dumps(answers))
+            else:
+                survey = Survey(event=event.first(), question=question, answers=json.dumps(answers))
+                survey.save()
 
         return redirect("/")
     elif request.method == "GET":

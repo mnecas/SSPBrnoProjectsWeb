@@ -24,6 +24,7 @@
                     {% csrf_token %}
                     <input type="hidden" name="event_id" value="{{ event.id }}">
                     <input type="hidden" name="new_users" id="new_users">
+                    <input type="hidden" name="surveys" id="surveys">
                         <div class="input-field">
                             <input name="title" id="first_name" type="text" value="{{ event.name }}" class="validate">
                             <label for="first_name">Name</label>
@@ -56,6 +57,14 @@
                                 </div>
                             </div>
                         </div>
+                         <div class="col s12">
+                                <span><h5>Anketa</h5></span>
+                                <a class="btn" onclick="add_survey()">Přidat anketu</a>
+                            </div>
+                            <div>
+                                <ol id="survey">
+                                </ol>
+                            </div>
                     </div>
                         <div class="file-field input-field">
                                 <div class="btn">
@@ -236,5 +245,91 @@ document.getElementById("new_added_users").innerHTML=new_users.join(", ");
   });
  }
  autocomp();
+
+
+var question={};
+
+var answers = [];
+var questions = [];
+
+var ans = [];
+var number_q = 0;
+{% for added_survey in event.get_surveys %}
+    add_survey();
+    ans[number_q] = [];
+    num_ans=0;
+    added_answers=JSON.parse('{{added_survey.answers|safe}}');
+    added_answers.forEach(function(added_answer){
+        ans[number_q].push(added_answer);
+        num_ans+=1;
+        if(num_ans > 2){
+            add_answer(number_q);
+        }
+    });
+    number_q += 1;
+{% endfor %}
+
+questions = [];
+
+{% for added_survey in event.get_surveys %}
+    questions.push("{{added_survey.question}}");
+{% endfor %}
+
+
+answers=ans;
+set_anketa();
+
+function get_anketa(){
+    for(var number=0; number<Object.keys(question).length;number++){
+        questions.push(document.getElementById('q'+number).value);
+        answers.push(new Array());
+        for(var i=0; i<question[number]+1;i++){
+            answers[number].push(document.getElementById('q'+number+'a'+i).value);
+        }
+    }
+}
+
+function set_anketa(){
+    for(var number=0; number<questions.length;number++){
+        if(questions[number] != undefined) document.getElementById('q'+number).value = questions[number];
+        for(var i=0; i<question[number]+1;i++){
+            if(answers[number][i] != undefined) document.getElementById('q'+number+'a'+i).value = answers[number][i];
+        }
+    }
+}
+
+
+function add_survey(){
+    answers =[];
+    questions=[];
+    get_anketa();
+    question[Object.keys(question).length] = 1;
+    document.getElementById('survey').innerHTML += '<li><span>Otázka</span><input id="q'+(Object.keys(question).length-1)+'" type="text" class="validate"></li><ol id="answer'+(Object.keys(question).length-1)+'"><li>odpoved<input id="q'+(Object.keys(question).length-1)+'a0" type="text" class="validate"></li><li>odpoved<input id="q'+(Object.keys(question).length-1)+'a1" type="text" class="validate"></li></ol><a class="btn "onclick="add_answer('+(Object.keys(question).length-1)+')"><i class="material-icons">add</i></a>';
+    set_anketa();
+}
+
+function add_answer(number){
+    answers =[];
+    questions=[];
+    get_anketa();
+    question[number] += 1;
+    document.getElementById('answer'+number).innerHTML += '<li>odpoved<input id="q'+number+'a'+question[number]+'" type="text" class="validate"></li>'
+    set_anketa();
+
+}
+
+$('#save_edit').submit(function() {
+    question_str = {}
+    for(var i=0; i<Object.keys(question).length;i++){
+        console.log('I'+i);
+        question_str[document.getElementById('q'+i).value] = [];
+        for(var j=0; j<question[i]+1;j++){
+            question_str[document.getElementById('q'+i).value].push(document.getElementById('q'+i+'a'+j).value);
+            console.log(j+'j');
+        }
+    }
+    document.getElementById("surveys").value = JSON.stringify(question_str);
+    return true;
+});
 </script>
 </html>

@@ -285,15 +285,12 @@ function add_answer(number){
 $('#save_edit').submit(function() {
     question_str = {}
     for(var i=0; i<Object.keys(question).length;i++){
-        console.log('I'+i);
         question_str[document.getElementById('q'+i).value] = [];
         for(var j=0; j<question[i]+1;j++){
             question_str[document.getElementById('q'+i).value].push(document.getElementById('q'+i+'a'+j).value);
-            console.log(j+'j');
         }
     }
     document.getElementById("surveys").value = JSON.stringify(question_str);
-    console.log(question_str);
     return true;
 });
 </script>

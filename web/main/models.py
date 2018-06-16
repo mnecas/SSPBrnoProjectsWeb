@@ -2,7 +2,8 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
-
+import json
+json_dec = json.JSONDecoder()
 
 class User(models.Model):
     username = models.CharField(max_length=30, default="")
@@ -44,6 +45,9 @@ class Event(models.Model):
     def get_study_mat(self):
         return Study_material.objects.filter(event=self)
 
+    def get_surveys(self):
+        return Survey.objects.filter(event=self)
+
     def __str__(self):
         return str(self.name)
 
@@ -78,8 +82,3 @@ class Survey(models.Model):
     question = models.CharField(max_length=300)
     answers = models.CharField(max_length=300)
 
-    def set_answers(self, answer):
-        self.answers = json.dumps(answer)
-
-    def get_answers(self, answer):
-        self.answers = json.loads(answer)
