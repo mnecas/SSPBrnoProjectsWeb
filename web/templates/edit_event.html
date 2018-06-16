@@ -171,6 +171,11 @@
               'St',
               'Čt',
               'Pá',
+              'Pá',
+              'Pá',
+              'Pá',
+              'Pá',
+              'Pá',
               'So'
             ],
          cancel: 'Zrušit'
@@ -179,7 +184,13 @@
     )
   });
 
-var added = "{{ added_users }}".split(", ");
+var added = "{{ added_users }}";
+if(added){
+ added=added.split(", ");
+}
+else{
+ added=[];
+}
 var all_users = "{{ all_users_js|safe }}";
 all_users = all_users.replace("[","").replace("]","").split("'").join("").split(" ").join("").split(",");
 for(i = 0; i < added.length; i++){

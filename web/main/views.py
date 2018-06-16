@@ -76,7 +76,8 @@ def create_event(request):
         if name and text:
             users_list = []
             for user_add in new_users:
-                users_list.append(user_add)
+                if user_add != "":
+                    users_list.append(user_add)
             users = json.dumps(users_list)
             event = Event(name=name, text=text, users=users, date_to=date_to, date_from=date_from, creator=User.objects.filter(username=username).first())
             event.save()
@@ -106,7 +107,6 @@ def edit_event(request):
             event = Event.objects.filter(id=event_id).first()
             try:
                 users_list = json_dec.decode(event.users)
-                print(users_list)
 
             except:
                 users_list = []
@@ -313,7 +313,7 @@ def save_edit(request):
             for user_added in users_list:
                 if user_added == user_add:
                     is_added = False
-            if is_added:
+            if is_added and user_add != "":
                 users_list.append(user_add)
         users = json.dumps(users_list)
         event.update(name=name, text=text, users=users, date_from=date_from, date_to=date_to)
