@@ -67,9 +67,19 @@ class Anketa(models.Model):
                                      MinValueValidator(1)
                                  ])
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=None)
-    #question = models.CharField(default="", max_length=100)
 
 class Study_material(models.Model):
     name = models.CharField(max_length=300)
     path = models.CharField(max_length=300)
     event = models.ForeignKey(Event, on_delete=models.CASCADE, default=None)
+
+class Survey(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, default=None)
+    question = models.CharField(max_length=300)
+    answers = models.CharField(max_length=300)
+
+    def set_answers(self, answer):
+        self.answers = json.dumps(answer)
+
+    def get_answers(self, answer):
+        self.answers = json.loads(answer)

@@ -25,6 +25,7 @@
             <div class="row">
                 <form class="col s12" method="POST" action="/create_event" enctype="multipart/form-data" id="save_edit">
                     <input type="hidden" name="new_users" id="new_users">
+                    <input type="hidden" name="surveys" id="surveys">
                     {% csrf_token %}
                     <div class="row">
                         <div class="input-field">
@@ -47,20 +48,31 @@
                             </div>
                         </div>
                         <span><h5>Přidaní uživatelé: </h5></span>
-                    <p id="new_added_users"></p>
+                        <p id="new_added_users"></p>
 
 
-                    <div class="row">
-                        <div class="col s12">
-                            <div class="row">
-                                <div class="input-field col s12">
-                                  <input type="text" id="autocomplete-input" class="autocomplete" autocomplete="off">
-                                  <label for="autocomplete-input">Vyhledat a přidat uživatele</label>
+                        <div class="row">
+                            <div class="col s12">
+                                <div class="row">
+                                    <div class="input-field col s12">
+                                      <input type="text" id="autocomplete-input" class="autocomplete" autocomplete="off">
+                                      <label for="autocomplete-input">Vyhledat a přidat uživatele</label>
+                                    </div>
                                 </div>
+                            </div>
+
+                            <div class="col s12">
+                                <span><h5>Anketa</h5></span>
+                                <a class="btn" onclick="add_survey()">Přidat anketu</a>
+                            </div>
+                            <div>
+                                <ol id="survey">
+                                </ol>
                             </div>
                         </div>
                     </div>
-                        </div>
+
+
 
                     <div class="row">
                         <div class="file-field input-field">
@@ -226,5 +238,63 @@ document.getElementById("new_added_users").innerHTML=new_users.join(", ");
  }
  autocomp();
 
+var question={};
+
+var answers = [];
+var questions = [];
+
+function get_anketa(){
+    for(var number=0; number<Object.keys(question).length;number++){
+        questions.push(document.getElementById('q'+number).value);
+        answers.push(new Array());
+        for(var i=0; i<question[number]+1;i++){
+            answers[number].push(document.getElementById('q'+number+'a'+i).value);
+        }
+    }
+}
+
+function set_anketa(){
+    for(var number=0; number<questions.length;number++){
+        if(questions[number] != undefined) document.getElementById('q'+number).value = questions[number];
+        for(var i=0; i<question[number]+1;i++){
+            if(answers[number][i] != undefined) document.getElementById('q'+number+'a'+i).value = answers[number][i];
+        }
+    }
+}
+
+
+function add_survey(){
+    answers =[];
+    questions=[];
+    get_anketa();
+    question[Object.keys(question).length] = 1;
+    document.getElementById('survey').innerHTML += '<li><span>Otázka</span><input id="q'+(Object.keys(question).length-1)+'" type="text" class="validate"></li><ol id="answer'+(Object.keys(question).length-1)+'"><li>odpoved<input id="q'+(Object.keys(question).length-1)+'a0" type="text" class="validate"></li><li>odpoved<input id="q'+(Object.keys(question).length-1)+'a1" type="text" class="validate"></li></ol><a class="btn "onclick="add_answer('+(Object.keys(question).length-1)+')"><i class="material-icons">add</i></a>';
+    set_anketa();
+}
+
+function add_answer(number){
+    answers =[];
+    questions=[];
+    get_anketa();
+    question[number] += 1;
+    document.getElementById('answer'+number).innerHTML += '<li>odpoved<input id="q'+number+'a'+question[number]+'" type="text" class="validate"></li>'
+    set_anketa();
+
+}
+
+$('#save_edit').submit(function() {
+    question_str = {}
+    for(var i=0; i<Object.keys(question).length;i++){
+        console.log('I'+i);
+        question_str[document.getElementById('q'+i).value] = [];
+        for(var j=0; j<question[i]+1;j++){
+            question_str[document.getElementById('q'+i).value].push(document.getElementById('q'+i+'a'+j).value);
+            console.log(j+'j');
+        }
+    }
+    document.getElementById("surveys").value = JSON.stringify(question_str);
+    console.log(question_str);
+    return true;
+});
 </script>
 </html>

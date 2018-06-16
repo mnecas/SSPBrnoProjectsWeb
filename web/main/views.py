@@ -73,6 +73,10 @@ def create_event(request):
         images = request.FILES.getlist('images')
         new_users = request.POST.get("new_users", "")
         new_users = new_users.split(",")
+
+        surveys = request.POST.get("surveys", "")
+        print(json.loads(surveys))
+
         if name and text:
             users_list = []
             for user_add in new_users:
