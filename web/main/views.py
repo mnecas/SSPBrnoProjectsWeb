@@ -94,8 +94,9 @@ def create_event(request):
                 Study_material.objects.create(event=event, path="media/image/events/" + event.name, name=file.name)
             for question in surveys.keys():
                 answers = surveys[question]
-                survey = Survey(event=event, question=question, answers=json.dumps(answers))
-                survey.save()
+                if question != "":
+                    survey = Survey(event=event, question=question, answers=json.dumps(answers))
+                    survey.save()
 
         return redirect("/")
 
@@ -364,14 +365,24 @@ def save_edit(request):
                 fs = FileSystemStorage(location="media/image/events/" + name)
                 fs.save(img.name, img)
 
+
+        surveys_of_event = list(event.first().get_surveys())
+        try:
+            surveys_of_event.remove(surveys)
+        except:
+            pass
+        for no_need_survey in surveys_of_event:
+            no_need_survey.delete()
         for question in surveys.keys():
             answers = surveys[question]
             survey = Survey.objects.filter(question=question)
-            if survey:
-                survey.update(question=question, answers=json.dumps(answers))
-            else:
-                survey = Survey(event=event.first(), question=question, answers=json.dumps(answers))
-                survey.save()
+
+            if question != "":
+                if survey:
+                    survey.update(question=question, answers=json.dumps(answers))
+                else:
+                    survey = Survey(event=event.first(), question=question, answers=json.dumps(answers))
+                    survey.save()
 
         return redirect("/")
     elif request.method == "GET":
