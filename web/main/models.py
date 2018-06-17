@@ -48,6 +48,9 @@ class Event(models.Model):
     def get_surveys(self):
         return Survey.objects.filter(event=self)
 
+    def get_completed_surveys(self):
+        return Completed_survey.objects.filter(event=self)
+
     def __str__(self):
         return str(self.name)
 
@@ -82,3 +85,8 @@ class Survey(models.Model):
     question = models.CharField(max_length=300)
     answers = models.CharField(max_length=300)
 
+class Completed_survey(models.Model):
+    users = models.TextField(null=True)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, default=None)
+    question = models.CharField(max_length=300)
+    answers = models.CharField(max_length=300)

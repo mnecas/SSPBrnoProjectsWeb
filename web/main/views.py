@@ -1,7 +1,7 @@
 from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render, redirect
 
-from .models import Image, Event, User, Comment, Anketa, Study_material, Survey
+from .models import Image, Event, User, Comment, Anketa, Study_material, Survey, Completed_survey
 from django.db.models import Avg
 
 import json
@@ -170,18 +170,45 @@ def info(request):
                     commentable = True
 
             ratings = Anketa.objects.filter(event=event)
+            surveys = Survey.objects.filter(event=event)
+            comp_surveys = Completed_survey.objects.filter(event=event)
+
+            surveys_dict = {}
+            for survey in surveys:
+                isnt_added = True
+                comp_survey = Completed_survey.objects.filter(question=survey.question).first()
+                if comp_survey and user.username in comp_survey.users:
+                    isnt_added = False
+
+                if isnt_added:
+                    surveys_dict[survey.question] = json.loads(survey.answers)
+
+            comp_surveys_dict = {}
+            count=0
+            for comp_survey in comp_surveys:
+                answers = json.loads(comp_survey.answers)
+                for answer in answers:
+                    count += answers[answer]
+                for answer in answers:
+                    answers[answer]=[answers[answer], answers[answer]/(count/90)+10]
+                comp_surveys_dict[comp_survey.question] = answers
+
             if len(ratings)>0:
                return render(request, "info.html", {"event": event,
                                                  "user": user,
                                                  "average_rating": "%.2f"%ratings.aggregate(Avg('points'))["points__avg"],
                                                  "study_material": event.get_study_mat(),
-                                                    "can_comment":commentable})
+                                                    "can_comment":commentable,
+                                                    "surveys":surveys_dict,
+                                                    "comp_surveys":comp_surveys_dict})
 
             return render(request, "info.html", {"event": event,
                                                  "user": user,
                                                  "average_rating": "none",
                                                  "study_material": event.get_study_mat(),
-                                                 "can_comment": commentable})
+                                                 "can_comment": commentable,
+                                                    "surveys":surveys_dict,
+                                                    "comp_surveys":comp_surveys_dict})
         return redirect("/")
     elif request.method == "POST":
         if "username" in request.session.keys():
@@ -409,3 +436,42 @@ def team(request):
             if request.session["username"]:
                 user = User.objects.filter(username=request.session["username"]).first()
         return render(request, "team.html",{"user": user})
+
+def anketa(request):
+    if request.method == "POST":
+        user = None
+        if "username" in request.session.keys():
+            if request.session["username"]:
+                user = User.objects.filter(username=request.session["username"]).first()
+        event_id = request.POST.get("event_id","")
+        event = Event.objects.filter(id=event_id).first()
+        surveys = event.get_surveys()
+        for survey in  surveys:
+            result = request.POST.get(survey.question, "")
+            comp_survey_up = Completed_survey.objects.filter(question=survey.question)
+            comp_survey = comp_survey_up.first()
+            if comp_survey:
+                answers = json.loads(comp_survey.answers)
+                for answer in json.loads(survey.answers):
+                    if result == answer:
+                        try:
+                            answers[answer] += 1
+                        except KeyError:
+                            answers[answer] = 1
+                users = json.loads(comp_survey.users)
+                users.append(user.username)
+                comp_survey_up.update(answers=json.dumps(answers), users=json.dumps(users))
+            else:
+                users = []
+                users.append(user.username)
+                answers = {}
+                for answer in json.loads(survey.answers):
+                    answers[answer] = 0
+                    if result == answer:
+                        answers[answer] += 1
+                new_com_survey = Completed_survey(users=json.dumps(users), event=event, question=survey.question, answers=json.dumps(answers))
+                new_com_survey.save()
+
+        return redirect("/info?event="+event_id)
+    else:
+        return redirect("/")
