@@ -178,7 +178,7 @@ def info(request):
             for survey in surveys:
                 isnt_added = True
                 comp_survey = Completed_survey.objects.filter(question=survey.question).first()
-                if comp_survey and user.username in comp_survey.users:
+                if user and comp_survey and user.username in comp_survey.users:
                     isnt_added = False
 
                 if isnt_added:
