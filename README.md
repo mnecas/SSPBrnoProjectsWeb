@@ -20,3 +20,7 @@ This is repo of team project for our school.
 
 
 If it doesn't work, check your Python version.
+
+### Admin side of website
+Web does not have default admin user to control data. You need to create it.
+`python manage.py createsuperuser`
