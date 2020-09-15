@@ -1,6 +1,8 @@
 django>=2.2.10
 Pillow
+pyOpenSSL
 secrets
 gunicorn
-psycopg2
+#psycopg2
 whitenoise
+project
